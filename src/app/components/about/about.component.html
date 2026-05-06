@@ -1,0 +1,57 @@
+<section id="about" class="about-section">
+  <div class="section-container">
+    <div class="about-grid">
+
+      <!-- Left: Text -->
+      <div class="about-text anim-el">
+        <p class="section-tag">// about me</p>
+        <h2 class="section-title" style="margin-bottom:1.5rem">
+          Crafting systems that<br>
+          <span class="accent-text">scale & endure</span>
+        </h2>
+
+        <p class="about-para">
+          I'm a <strong>Full Stack Developer</strong> specializing in the
+          <strong>.NET ecosystem</strong> and <strong>Angular</strong> —
+          with a passion for architecting solutions that are not just functional,
+          but maintainable, performant, and future-proof.
+        </p>
+
+        <p class="about-para">
+          My approach begins with understanding the <em>business problem</em>.
+          From there I apply <strong>Clean Architecture</strong>, <strong>DDD</strong>,
+          and <strong>SOLID</strong> principles to design systems that evolve with
+          your product — whether it's a CRM platform, a SaaS rewards engine,
+          or a cloud-native enterprise application.
+        </p>
+
+        <p class="about-para">
+          I've worked across the full stack: designing relational and
+          NoSQL schemas, building RESTful & GraphQL APIs, implementing
+          authentication flows, deploying to <strong>Azure</strong> with
+          automated pipelines, and crafting fluid Angular UIs.
+        </p>
+
+        <div class="about-actions">
+          <a href="/assets/cv/ahmed-alsoghayar-cv.pdf" download class="btn-primary">
+            Download CV
+          </a>
+          <a href="https://github.com/ahmed-alsoghayar" target="_blank" class="btn-outline">
+            GitHub Profile
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Highlights -->
+      <div class="highlights-grid">
+        <div *ngFor="let h of highlights; let i = index" class="highlight-card anim-el card-dark"
+          [style.animation-delay]="(i * 0.1) + 's'">
+          <div class="highlight-icon">{{ h.icon }}</div>
+          <h3 class="highlight-label">{{ h.label }}</h3>
+          <p class="highlight-desc">{{ h.desc }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

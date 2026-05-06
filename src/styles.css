@@ -1,1 +1,193 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   Google Fonts
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* ============================================================
+   Tailwind v4 — single import replaces all @tailwind directives
+   ============================================================ */
+@import "tailwindcss";
+
+/* ============================================================
+   Tailwind v4 Theme Tokens  (@theme replaces tailwind.config.js)
+   ============================================================ */
+@theme {
+  --font-family-display: "Syne", sans-serif;
+  --font-family-body: "DM Sans", sans-serif;
+  --font-family-mono: "JetBrains Mono", monospace;
+
+  --color-surface-900: #0a0a0f;
+  --color-surface-800: #111118;
+  --color-surface-700: #1a1a24;
+  --color-surface-600: #22222f;
+
+  --color-accent: #00ffb2;
+  --color-accent-dim: #00cc8e;
+
+  --color-muted: #6b7280;
+  --color-border: rgba(255, 255, 255, 0.06);
+
+  --animate-fade-up: fade-up 0.7s ease forwards;
+  --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+/* ============================================================
+   Base Reset
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #0a0a0f;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  color: #e5e7eb;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ffb2;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Reusable Layout Utilities
+   ============================================================ */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  color: #00ffb2;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #f9fafb;
+  line-height: 1.1;
+}
+
+.accent-text {
+  color: #00ffb2;
+}
+
+/* ============================================================
+   Card
+   ============================================================ */
+.card-dark {
+  background: #111118;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.card-dark:hover {
+  border-color: rgba(0, 255, 178, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 255, 178, 0.08);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn-primary {
+  background: #00ffb2;
+  color: #0a0a0f;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: #00cc8e;
+  box-shadow: 0 0 30px rgba(0, 255, 178, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #e5e7eb;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  border-color: #00ffb2;
+  color: #00ffb2;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Text Gradient Utility
+   ============================================================ */
+.text-gradient {
+  background: linear-gradient(135deg, #00ffb2, #00cc8e 50%, #00a870);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

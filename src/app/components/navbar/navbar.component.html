@@ -1,0 +1,60 @@
+<nav [class.scrolled]="isScrolled()" class="navbar">
+  <div class="nav-inner">
+
+    <!-- Logo -->
+    <a href="#" class="logo" (click)="scrollTo('#hero'); $event.preventDefault()">
+      <span class="logo-bracket">&lt;</span>
+      <span class="logo-name">Ahmed</span>
+      <span class="logo-bracket">/&gt;</span>
+    </a>
+
+    <!-- Desktop Links -->
+    <ul class="nav-links">
+      <li *ngFor="let link of navLinks">
+        <a [href]="link.href" (click)="scrollTo(link.href); $event.preventDefault()">
+          {{ getLinkLabel(link) }}
+        </a>
+      </li>
+    </ul>
+
+    <!-- Right Controls -->
+    <div class="nav-controls">
+      <!-- Language Toggle -->
+      <button class="lang-btn" (click)="toggleLang()"
+        [title]="isArabic() ? 'Switch to English' : 'التبديل إلى العربية'">
+        <span class="lang-icon">{{ isArabic() ? 'EN' : 'AR' }}</span>
+      </button>
+
+      <!-- CV Button -->
+      <a href="./CV/AhmedMohamedAlsoghayar-CV.pdf" download class="btn-cv">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        {{ isArabic() ? 'السيرة الذاتية' : 'Download CV' }}
+      </a>
+
+      <!-- Hamburger -->
+      <button class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.open]="menuOpen()">
+    <ul>
+      <li *ngFor="let link of navLinks">
+        <a [href]="link.href" (click)="scrollTo(link.href); $event.preventDefault()">
+          {{ getLinkLabel(link) }}
+        </a>
+      </li>
+      <li>
+        <a href="./CV/AhmedMohamedAlsoghayar-CV.pdf" download class="mobile-cv">
+          ↓ {{ isArabic() ? 'تحميل السيرة الذاتية' : 'Download CV' }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,50 @@
+<section id="skills" class="skills-section">
+  <div class="section-container">
+
+    <!-- Header -->
+    <div class="skills-header anim-el">
+      <p class="section-tag">// skills & expertise</p>
+      <h2 class="section-title">
+        Tech I work with
+        <span class="accent-text"> daily</span>
+      </h2>
+      <p class="skills-subtitle">
+        A curated set of technologies I've mastered across the full stack.
+      </p>
+    </div>
+
+    <!-- Categories Grid -->
+    <div class="categories-grid">
+      <div *ngFor="let cat of categories; let i = index" class="skill-card card-dark anim-el"
+        [style.animation-delay]="(i * 0.12) + 's'">
+        <!-- Card Header -->
+        <div class="skill-card-header">
+          <span class="cat-icon">{{ cat.icon }}</span>
+          <h3 class="cat-title" [style.color]="cat.color">{{ cat.title }}</h3>
+        </div>
+
+        <!-- Skill Bars -->
+        <div class="skill-bars">
+          <div *ngFor="let skill of cat.skills" class="skill-bar-wrap">
+            <div class="skill-bar-meta">
+              <span class="skill-name">{{ skill.name }}</span>
+              <span class="skill-level" [style.color]="cat.color">{{ skill.level }}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" [style.width]="skill.level + '%'"
+                [style.background]="'linear-gradient(90deg, ' + cat.color + '99, ' + cat.color + ')'"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Badges -->
+    <div class="badges-row anim-el">
+      <span *ngFor="let badge of ['C#', '.NET 8', 'Angular', 'TypeScript', 'Azure', 'Docker',
+        'SQL Server', 'MongoDB', 'Redis', 'RxJS', 'NgRx', 'Tailwind', 'CQRS', 'MediatR',
+        'EF Core', 'SignalR', 'REST', 'Clean Arch', 'SOLID', 'DDD']" class="tech-badge">{{ badge }}</span>
+    </div>
+
+  </div>
+</section>

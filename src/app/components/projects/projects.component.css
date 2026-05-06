@@ -1,0 +1,249 @@
+.projects-section {
+  padding: 7rem 1.5rem;
+  background: #0a0a0f;
+  position: relative;
+}
+
+.projects-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 178, 0.15),
+    transparent
+  );
+}
+
+/* Header */
+.projects-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.projects-subtitle {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  color: #6b7280;
+  margin-top: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+/* Filters */
+.filter-row {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #9ca3af;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.filter-btn:hover {
+  color: #e5e7eb;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.filter-btn.active {
+  color: #0a0a0f;
+  background: #00ffb2;
+  border-color: #00ffb2;
+  font-weight: 600;
+}
+
+/* Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Card */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.35s ease;
+}
+
+.project-card.featured {
+  grid-column: span 1;
+}
+
+/* Top gradient bar */
+.card-topbar {
+  height: 3px;
+  width: 100%;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover .card-topbar {
+  opacity: 1;
+}
+
+/* Header */
+.card-header {
+  padding: 1.5rem 1.5rem 0;
+}
+
+.card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.project-badge {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: #00ffb2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(0, 255, 178, 0.08);
+  border: 1px solid rgba(0, 255, 178, 0.18);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.project-title {
+  font-family: "Syne", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #f9fafb;
+  margin-bottom: 0.2rem;
+}
+
+.project-subtitle {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Links */
+.project-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.icon-link {
+  color: #6b7280;
+  transition: color 0.25s ease;
+  display: flex;
+  align-items: center;
+}
+
+.icon-link:hover {
+  color: #00ffb2;
+}
+
+/* Description */
+.project-desc {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.88rem;
+  color: #9ca3af;
+  line-height: 1.7;
+  padding: 1rem 1.5rem 0;
+}
+
+/* Features */
+.project-features {
+  list-style: none;
+  padding: 0.75rem 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.project-features li {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.82rem;
+  color: #9ca3af;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.feat-dot {
+  color: #00ffb2;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  margin-top: 2px;
+}
+
+/* Tech Stack */
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  margin-top: auto;
+}
+
+.tech-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  color: #9ca3af;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.project-card:hover .tech-tag {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* CTA */
+.projects-cta {
+  text-align: center;
+}
+
+/* Animations */
+.anim-el {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.anim-el.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}

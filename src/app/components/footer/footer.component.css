@@ -1,0 +1,239 @@
+.footer {
+  background: #0a0a0f;
+  position: relative;
+}
+
+.footer-glow-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 178, 0.3),
+    transparent
+  );
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 2rem;
+}
+
+/* Top */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.2fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Brand */
+
+.logo {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #e5e7eb;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.logo-bracket {
+  color: #00ffb2;
+}
+
+.footer-tagline {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+/* Socials */
+.footer-socials {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.footer-social-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: #6b7280;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.footer-social-btn:hover {
+  color: #00ffb2;
+  border-color: rgba(0, 255, 178, 0.25);
+  background: rgba(0, 255, 178, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Nav */
+.footer-nav-title {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.footer-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-nav ul li a {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.88rem;
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.footer-nav ul li a::before {
+  content: "—";
+  color: #2d2d3a;
+  font-size: 0.7rem;
+  transition: color 0.25s ease;
+}
+
+.footer-nav ul li a:hover {
+  color: #00ffb2;
+}
+
+.footer-nav ul li a:hover::before {
+  color: #00ffb2;
+}
+
+/* Contact Info */
+.contact-info-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.contact-info-list li svg {
+  color: #4b5563;
+  flex-shrink: 0;
+}
+
+.contact-info-list li a {
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.contact-info-list li a:hover {
+  color: #00ffb2;
+}
+
+/* CV Btn */
+.footer-cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #00ffb2;
+  background: rgba(0, 255, 178, 0.06);
+  border: 1px solid rgba(0, 255, 178, 0.18);
+  padding: 0.5rem 1rem;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.footer-cv-btn:hover {
+  background: rgba(0, 255, 178, 0.12);
+  box-shadow: 0 0 16px rgba(0, 255, 178, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Bottom */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-copy {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.82rem;
+  color: #4b5563;
+}
+
+/* Back to top */
+.back-to-top {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.back-to-top:hover {
+  color: #00ffb2;
+  border-color: rgba(0, 255, 178, 0.25);
+  background: rgba(0, 255, 178, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-brand {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+  .footer-brand {
+    grid-column: span 1;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}

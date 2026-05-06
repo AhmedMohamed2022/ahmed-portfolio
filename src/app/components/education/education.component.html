@@ -1,0 +1,82 @@
+<section id="education" class="edu-section">
+  <div class="section-container">
+
+    <!-- Header -->
+    <div class="edu-header anim-el">
+      <p class="section-tag">// education</p>
+      <h2 class="section-title">
+        My <span class="accent-text">background</span>
+      </h2>
+      <p class="edu-subtitle">
+        Academic foundation and professional training that shaped my engineering mindset.
+      </p>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="edu-grid">
+      <div *ngFor="let edu of educations; let i = index" class="edu-card card-dark anim-el"
+        [style.animation-delay]="(i * 0.15) + 's'">
+        <!-- Top accent line -->
+        <div class="edu-accent-line" [style.background]="edu.color"></div>
+
+        <div class="edu-card-body">
+          <!-- Icon & Period Row -->
+          <div class="edu-top-row">
+            <div class="edu-icon-wrap" [style.border-color]="edu.color + '33'">
+              <span class="edu-icon">{{ edu.icon }}</span>
+            </div>
+            <span class="edu-period">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              {{ edu.period }}
+            </span>
+          </div>
+
+          <!-- Degree & Institution -->
+          <h3 class="edu-degree">{{ edu.degree }}</h3>
+          <p class="edu-institution" [style.color]="edu.color">
+            {{ edu.institution }}
+          </p>
+
+          <!-- Description -->
+          <p class="edu-desc">{{ edu.description }}</p>
+
+          <!-- Highlights -->
+          <div class="edu-highlights">
+            <p class="highlights-label">Key Topics</p>
+            <ul class="highlights-list">
+              <li *ngFor="let h of edu.highlights">
+                <span class="highlight-dot" [style.color]="edu.color">▹</span>
+                {{ h }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certifications / Extra Banner -->
+    <div class="certs-banner anim-el">
+      <div class="certs-inner">
+        <div class="certs-text">
+          <p class="certs-title">Continuous Learning</p>
+          <p class="certs-desc">
+            Regularly completing online courses and certifications in Azure, Docker,
+            Clean Architecture, and advanced Angular patterns.
+          </p>
+        </div>
+        <div class="certs-badges">
+          <span class="cert-badge">☁️ Azure Fundamentals</span>
+          <span class="cert-badge">🐳 Docker & Containers</span>
+          <span class="cert-badge">🏗️ Clean Architecture</span>
+          <span class="cert-badge">🔷 Angular Advanced</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
