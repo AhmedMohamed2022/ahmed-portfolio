@@ -1,0 +1,103 @@
+/* ============================================================
+   RTL — Arabic layout overrides
+   All rules are scoped to [dir="rtl"] so they only fire
+   when the language service sets the HTML dir attribute.
+   ============================================================ */
+
+/* ── Global text alignment ─────────────────────────────── */
+[dir="rtl"] body {
+  font-family: 'Tajawal', 'DM Sans', sans-serif;
+}
+
+/* ── Navbar ─────────────────────────────────────────────── */
+[dir="rtl"] .nav-inner      { flex-direction: row-reverse; }
+[dir="rtl"] .nav-links      { flex-direction: row-reverse; }
+[dir="rtl"] .nav-controls   { flex-direction: row-reverse; }
+[dir="rtl"] .mobile-menu ul { text-align: right; }
+
+/* ── Hero ───────────────────────────────────────────────── */
+[dir="rtl"] .hero-content   { text-align: right; }
+[dir="rtl"] .hero-tag       { flex-direction: row-reverse; }
+[dir="rtl"] .hero-ctas      { flex-direction: row-reverse; justify-content: flex-end; }
+[dir="rtl"] .hero-stats     { flex-direction: row-reverse; }
+[dir="rtl"] .stat           { align-items: flex-end; }
+
+/* ── Section tags ───────────────────────────────────────── */
+[dir="rtl"] .section-tag    { text-align: right; letter-spacing: 0; }
+
+/* ── About ──────────────────────────────────────────────── */
+[dir="rtl"] .about-grid     { direction: rtl; }
+[dir="rtl"] .about-text     { text-align: right; }
+[dir="rtl"] .about-actions  { flex-direction: row-reverse; justify-content: flex-start; }
+
+/* ── Skills ─────────────────────────────────────────────── */
+[dir="rtl"] .skills-header  { text-align: right; }
+[dir="rtl"] .skill-card-header { flex-direction: row-reverse; }
+[dir="rtl"] .skill-bar-meta { flex-direction: row-reverse; }
+[dir="rtl"] .bar-fill       { margin-right: 0; }
+[dir="rtl"] .badges-row     { justify-content: flex-end; }
+
+/* ── Projects ───────────────────────────────────────────── */
+[dir="rtl"] .projects-header { text-align: right; }
+[dir="rtl"] .filter-row      { justify-content: flex-end; }
+[dir="rtl"] .card-title-row  { flex-direction: row-reverse; }
+[dir="rtl"] .project-links   { flex-direction: row-reverse; }
+[dir="rtl"] .project-desc,
+[dir="rtl"] .project-features li { text-align: right; }
+[dir="rtl"] .project-features li { flex-direction: row-reverse; }
+[dir="rtl"] .tech-stack      { flex-direction: row-reverse; }
+[dir="rtl"] .projects-cta    { text-align: right; }
+
+/* ── Experience ─────────────────────────────────────────── */
+[dir="rtl"] .exp-header     { text-align: right; }
+[dir="rtl"] .timeline       { padding-left: 0; padding-right: 2rem; }
+[dir="rtl"] .timeline::before { left: auto; right: 7px; }
+[dir="rtl"] .timeline-dot   { left: auto; right: -2rem; }
+[dir="rtl"] .exp-card-inner { text-align: right; }
+[dir="rtl"] .exp-title-row  { flex-direction: row-reverse; }
+[dir="rtl"] .exp-company-row { flex-direction: row-reverse; }
+[dir="rtl"] .exp-details-row { flex-direction: row-reverse; }
+[dir="rtl"] .exp-responsibilities li { flex-direction: row-reverse; text-align: right; }
+[dir="rtl"] .exp-tech        { flex-direction: row-reverse; }
+[dir="rtl"] .metrics-row     { direction: rtl; }
+[dir="rtl"] .metric-label    { text-align: center; }
+
+/* ── Education ──────────────────────────────────────────── */
+[dir="rtl"] .edu-header      { text-align: right; }
+[dir="rtl"] .edu-top-row     { flex-direction: row-reverse; }
+[dir="rtl"] .edu-card-body   { text-align: right; }
+[dir="rtl"] .highlights-list li { flex-direction: row-reverse; text-align: right; }
+[dir="rtl"] .certs-inner     { flex-direction: row-reverse; }
+[dir="rtl"] .certs-badges    { flex-direction: row-reverse; }
+[dir="rtl"] .certs-text      { text-align: right; }
+
+/* ── Contact ────────────────────────────────────────────── */
+[dir="rtl"] .contact-header  { text-align: right; }
+[dir="rtl"] .contact-grid    { direction: rtl; }
+[dir="rtl"] .contact-info-block { text-align: right; }
+[dir="rtl"] .social-link     { flex-direction: row-reverse; }
+[dir="rtl"] .social-text     { text-align: right; }
+[dir="rtl"] .availability-badge { flex-direction: row-reverse; }
+[dir="rtl"] .form-group label { text-align: right; }
+[dir="rtl"] .form-group input,
+[dir="rtl"] .form-group textarea { text-align: right; direction: rtl; }
+[dir="rtl"] .contact-info-list li { flex-direction: row-reverse; text-align: right; }
+[dir="rtl"] .submit-btn      { flex-direction: row-reverse; }
+[dir="rtl"] .form-success    { direction: rtl; }
+
+/* ── Footer ─────────────────────────────────────────────── */
+[dir="rtl"] .footer-top      { direction: rtl; }
+[dir="rtl"] .footer-brand    { text-align: right; }
+[dir="rtl"] .footer-socials  { flex-direction: row-reverse; }
+[dir="rtl"] .footer-nav ul   { text-align: right; }
+[dir="rtl"] .footer-nav ul li a { flex-direction: row-reverse; }
+[dir="rtl"] .footer-nav ul li a::before { content: '—'; }
+[dir="rtl"] .contact-info-list li { flex-direction: row-reverse; }
+[dir="rtl"] .footer-bottom   { flex-direction: row-reverse; }
+[dir="rtl"] .footer-copy     { text-align: right; }
+
+/* ── Arabic font — add to index.html <head> ─────────────── */
+/*
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+*/

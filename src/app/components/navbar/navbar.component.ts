@@ -1,63 +1,51 @@
-import { Component, HostListener, OnInit, signal } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface NavLink {
-  label: string;
-  labelAr: string;
-  href: string;
-}
+import { LanguageService } from '../../services/language.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  isScrolled = signal(false);
-  menuOpen = signal(false);
-  isArabic = signal(false);
+  lang = inject(LanguageService);
 
-  navLinks: NavLink[] = [
-    { label: 'About', labelAr: 'عني', href: '#about' },
-    { label: 'Skills', labelAr: 'المهارات', href: '#skills' },
-    { label: 'Projects', labelAr: 'المشاريع', href: '#projects' },
-    { label: 'Experience', labelAr: 'الخبرة', href: '#experience' },
-    { label: 'Education', labelAr: 'التعليم', href: '#education' },
-    { label: 'Contact', labelAr: 'تواصل', href: '#contact' },
+  isScrolled = false;
+  menuOpen   = false;
+
+  navLinks = [
+    { key: 'nav.about',      href: '#about'      },
+    { key: 'nav.skills',     href: '#skills'     },
+    { key: 'nav.projects',   href: '#projects'   },
+    { key: 'nav.experience', href: '#experience' },
+    { key: 'nav.education',  href: '#education'  },
+    { key: 'nav.contact',    href: '#contact'    },
   ];
 
   ngOnInit(): void {
-    const stored = localStorage.getItem('lang');
-    if (stored === 'ar') this.isArabic.set(true);
+    // Apply saved direction on first load
+    this.lang.applyDocumentDir(this.lang.lang());
   }
 
   @HostListener('window:scroll')
   onScroll(): void {
-    this.isScrolled.set(window.scrollY > 40);
+    this.isScrolled = window.scrollY > 40;
   }
 
   toggleMenu(): void {
-    this.menuOpen.update((v) => !v);
+    this.menuOpen = !this.menuOpen;
   }
 
   toggleLang(): void {
-    this.isArabic.update((v) => !v);
-    localStorage.setItem('lang', this.isArabic() ? 'ar' : 'en');
-    document.documentElement.setAttribute(
-      'dir',
-      this.isArabic() ? 'rtl' : 'ltr',
-    );
+    this.lang.toggle();
   }
 
   scrollTo(href: string): void {
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
-    this.menuOpen.set(false);
-  }
-
-  getLinkLabel(link: NavLink): string {
-    return this.isArabic() ? link.labelAr : link.label;
+    this.menuOpen = false;
   }
 }

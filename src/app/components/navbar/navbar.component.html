@@ -1,4 +1,4 @@
-<nav [class.scrolled]="isScrolled()" class="navbar">
+<nav [class.scrolled]="isScrolled" class="navbar">
   <div class="nav-inner">
 
     <!-- Logo -->
@@ -12,17 +12,18 @@
     <ul class="nav-links">
       <li *ngFor="let link of navLinks">
         <a [href]="link.href" (click)="scrollTo(link.href); $event.preventDefault()">
-          {{ getLinkLabel(link) }}
+          {{ link.key | translate }}
         </a>
       </li>
     </ul>
 
     <!-- Right Controls -->
     <div class="nav-controls">
+
       <!-- Language Toggle -->
       <button class="lang-btn" (click)="toggleLang()"
-        [title]="isArabic() ? 'Switch to English' : 'التبديل إلى العربية'">
-        <span class="lang-icon">{{ isArabic() ? 'EN' : 'AR' }}</span>
+        [title]="lang.isArabic() ? 'Switch to English' : 'التبديل إلى العربية'">
+        <span class="lang-icon">{{ lang.isArabic() ? 'EN' : 'AR' }}</span>
       </button>
 
       <!-- CV Button -->
@@ -32,27 +33,28 @@
           <polyline points="7 10 12 15 17 10" />
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
-        {{ isArabic() ? 'السيرة الذاتية' : 'Download CV' }}
+        {{ 'nav.downloadCv' | translate }}
       </a>
 
       <!-- Hamburger -->
-      <button class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen()">
+      <button class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen">
         <span></span><span></span><span></span>
       </button>
+
     </div>
   </div>
 
   <!-- Mobile Menu -->
-  <div class="mobile-menu" [class.open]="menuOpen()">
+  <div class="mobile-menu" [class.open]="menuOpen">
     <ul>
       <li *ngFor="let link of navLinks">
         <a [href]="link.href" (click)="scrollTo(link.href); $event.preventDefault()">
-          {{ getLinkLabel(link) }}
+          {{ link.key | translate }}
         </a>
       </li>
       <li>
         <a href="./CV/AhmedMohamedAlsoghayar-CV.pdf" download class="mobile-cv">
-          ↓ {{ isArabic() ? 'تحميل السيرة الذاتية' : 'Download CV' }}
+          ↓ {{ 'nav.downloadCv' | translate }}
         </a>
       </li>
     </ul>
