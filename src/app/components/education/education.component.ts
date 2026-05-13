@@ -20,8 +20,8 @@ export class EducationComponent implements OnInit {
   lang = inject(LanguageService);
 
   private staticEducations: EducationStatic[] = [
-    { icon: '🎓', color: '#00FFB2', period: '2022 – 2023' },
-    { icon: '📚', color: '#A78BFA', period: '2018 – 2022' },
+    { icon: '🎓', color: '#00FFB2', period: '2025 – 2026' },
+    { icon: '📚', color: '#A78BFA', period: '2020 – 2024' },
   ];
 
   // computed — reactive, re-evaluates when lang signal changes

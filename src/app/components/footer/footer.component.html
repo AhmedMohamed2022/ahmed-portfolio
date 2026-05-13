@@ -15,11 +15,10 @@
           <span class="logo-bracket">/&gt;</span>
         </a>
         <p class="footer-tagline">
-          Full Stack .NET &amp; Angular Developer<br>
-          Building systems that scale.
+          {{ 'footer.tagline' | translate }}
         </p>
 
-        <!-- Social icon buttons — pure inline SVG, no innerHTML -->
+        <!-- Social icon buttons -->
         <div class="footer-socials">
 
           <!-- GitHub -->
@@ -72,11 +71,11 @@
 
       <!-- Quick Nav -->
       <div class="footer-nav">
-        <p class="footer-nav-title">Navigation</p>
+        <p class="footer-nav-title">{{ 'footer.navTitle' | translate }}</p>
         <ul>
-          <li *ngFor="let link of navLinks">
+          <li *ngFor="let link of navLinks()">
             <a [href]="link.href" (click)="scrollTo(link.href); $event.preventDefault()">
-              {{ link.label }}
+              {{ link.key | translate }}
             </a>
           </li>
         </ul>
@@ -84,7 +83,7 @@
 
       <!-- Contact Info -->
       <div class="footer-contact">
-        <p class="footer-nav-title">Contact</p>
+        <p class="footer-nav-title">{{ 'footer.contactTitle' | translate }}</p>
         <ul class="contact-info-list">
 
           <li>
@@ -105,7 +104,7 @@
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <span>Egypt · Remote Worldwide</span>
+            <span>{{ 'footer.location' | translate }}</span>
           </li>
 
           <li>
@@ -114,7 +113,7 @@
               <circle cx="12" cy="12" r="10" />
               <polyline points="12 6 12 12 16 14" />
             </svg>
-            <span>GMT+2 (EET)</span>
+            <span>{{ 'footer.timezone' | translate }}</span>
           </li>
 
         </ul>
@@ -127,7 +126,7 @@
             <polyline points="7 10 12 15 17 10" />
             <line x1="12" y1="15" x2="12" y2="3" />
           </svg>
-          Download CV
+          {{ 'footer.downloadCv' | translate }}
         </a>
       </div>
 
@@ -136,7 +135,8 @@
     <!-- ─── Bottom Row ─────────────────────────────────── -->
     <div class="footer-bottom">
       <p class="footer-copy">
-        © {{ year }} Ahmed Mohamed Alsoghayar · Built with
+        © {{ year }} Ahmed Mohamed Alsoghayar ·
+        {{ 'footer.copyright' | translate }}
         <span class="accent-text">Angular</span> &amp;
         <span class="accent-text">Tailwind CSS</span>
       </p>

@@ -1,14 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LanguageService } from '../../services/language.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
-export interface Experience {
-  role: string;
-  company: string;
-  type: string;
-  period: string;
-  location: string;
-  description: string;
-  responsibilities: string[];
+export interface ExperienceStatic {
   techStack: string[];
   current: boolean;
 }
@@ -16,29 +11,15 @@ export interface Experience {
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './experience.component.html',
   styleUrls: ['./experience.component.css'],
 })
 export class ExperienceComponent implements OnInit {
-  experiences: Experience[] = [
+  lang = inject(LanguageService);
+
+  private staticExperiences: ExperienceStatic[] = [
     {
-      role: 'Freelance Full Stack Developer',
-      company: 'ARID Scientific Ltd',
-      type: 'Freelance / Contract',
-      period: 'Jan 2023 – Present',
-      location: 'Remote',
-      description:
-        'Delivered end-to-end web solutions for a scientific research company, building scalable backends, modern Angular frontends, and cloud-based infrastructure on Azure.',
-      responsibilities: [
-        'Designed and implemented RESTful APIs using ASP.NET Core with Clean Architecture and CQRS patterns',
-        'Built dynamic Angular SPAs with lazy loading, reactive forms, and NgRx state management',
-        'Architected multi-tenant data models in SQL Server with row-level security',
-        'Set up Azure DevOps CI/CD pipelines reducing deployment time by 60%',
-        'Integrated third-party services: payment gateways, email providers, and cloud storage',
-        'Conducted code reviews and established coding standards across the team',
-        'Optimized database queries and introduced Redis caching — improving API response times by 40%',
-      ],
       techStack: [
         'ASP.NET Core',
         'Angular',
@@ -53,18 +34,52 @@ export class ExperienceComponent implements OnInit {
     },
   ];
 
+  experiences = computed(() => {
+    const items = this.lang.t()['experience'].items;
+    return this.staticExperiences.map((s, i) => ({
+      ...s,
+      role: items[i].role,
+      company: items[i].company,
+      type: items[i].type,
+      period: items[i].period,
+      location: items[i].location,
+      description: items[i].description,
+      responsibilities: items[i].responsibilities,
+    }));
+  });
+
+  metrics = computed(() => this.lang.t()['experience'].metrics);
+
+  private observer!: IntersectionObserver;
+
+  constructor() {
+    effect(() => {
+      this.lang.lang();
+      setTimeout(() => this.observeElements(), 50);
+    });
+  }
+
   ngOnInit(): void {
-    const observer = new IntersectionObserver(
+    this.observer = new IntersectionObserver(
       (entries) =>
-        entries.forEach(
-          (e) => e.isIntersecting && e.target.classList.add('visible'),
-        ),
+        entries.forEach((e) => {
+          if (e.isIntersecting && !e.target.classList.contains('visible')) {
+            e.target.classList.add('visible');
+            this.observer.unobserve(e.target);
+          }
+        }),
       { threshold: 0.1 },
     );
-    setTimeout(() => {
-      document
-        .querySelectorAll('.exp-header, .exp-card, .exp-metric')
-        .forEach((el) => observer.observe(el));
-    }, 100);
+    setTimeout(() => this.observeElements(), 100);
+  }
+
+  private observeElements(): void {
+    document
+      .querySelectorAll('.exp-header, .exp-card, .exp-metric')
+      .forEach((el) => {
+        if (!el.classList.contains('visible')) {
+          this.observer.observe(el);
+        }
+      });
   }
 }

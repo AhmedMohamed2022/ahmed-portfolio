@@ -3,26 +3,31 @@
 
     <!-- Header -->
     <div class="exp-header anim-el">
-      <p class="section-tag">// experience</p>
+      <p class="section-tag">{{ 'experience.tag' | translate }}</p>
       <h2 class="section-title">
-        Where I've <span class="accent-text">worked</span>
+        {{ 'experience.title' | translate }}
+        <span class="accent-text">{{ 'experience.titleAccent' | translate }}</span>
       </h2>
     </div>
 
     <!-- Timeline -->
     <div class="timeline">
-      <div *ngFor="let exp of experiences; let i = index" class="exp-card anim-el"
+      <div *ngFor="let exp of experiences(); let i = index" class="exp-card anim-el"
         [style.animation-delay]="(i * 0.15) + 's'">
+
         <!-- Timeline dot -->
         <div class="timeline-dot" [class.current]="exp.current"></div>
 
         <div class="exp-card-inner card-dark">
+
           <!-- Header Row -->
           <div class="exp-card-header">
             <div class="exp-meta">
               <div class="exp-title-row">
                 <h3 class="exp-role">{{ exp.role }}</h3>
-                <span *ngIf="exp.current" class="current-badge">Current</span>
+                <span *ngIf="exp.current" class="current-badge">
+                  {{ 'experience.current' | translate }}
+                </span>
               </div>
               <div class="exp-company-row">
                 <span class="exp-company">{{ exp.company }}</span>
@@ -65,18 +70,14 @@
           <div class="exp-tech">
             <span *ngFor="let tech of exp.techStack" class="tech-tag">{{ tech }}</span>
           </div>
+
         </div>
       </div>
     </div>
 
     <!-- Impact Metrics -->
     <div class="metrics-row">
-      <div class="exp-metric anim-el" *ngFor="let m of [
-        { value: '60%', label: 'Deployment Time Reduced', icon: '⚡' },
-        { value: '40%', label: 'API Response Improvement', icon: '🚀' },
-        { value: '10+', label: 'Projects Delivered', icon: '✅' },
-        { value: '3+', label: 'Years of Experience', icon: '📅' }
-      ]">
+      <div class="exp-metric anim-el" *ngFor="let m of metrics()">
         <div class="metric-icon">{{ m.icon }}</div>
         <div class="metric-value">{{ m.value }}</div>
         <div class="metric-label">{{ m.label }}</div>
