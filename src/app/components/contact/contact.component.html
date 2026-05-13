@@ -3,14 +3,12 @@
 
     <!-- Header -->
     <div class="contact-header anim-el">
-      <p class="section-tag">// contact</p>
+      <p class="section-tag">{{ 'contact.tag' | translate }}</p>
       <h2 class="section-title">
-        Let's <span class="accent-text">work together</span>
+        {{ 'contact.title' | translate }}
+        <span class="accent-text">{{ 'contact.titleAccent' | translate }}</span>
       </h2>
-      <p class="contact-intro">
-        Have a project in mind or want to discuss an opportunity?
-        I'd love to hear from you.
-      </p>
+      <p class="contact-intro">{{ 'contact.intro' | translate }}</p>
     </div>
 
     <div class="contact-grid">
@@ -19,11 +17,8 @@
       <div class="contact-left anim-el">
 
         <div class="contact-info-block">
-          <h3 class="info-title">Get in touch</h3>
-          <p class="info-desc">
-            I'm currently open to full-time roles, freelance contracts,
-            and interesting collaborations. Response time is usually within 24 hours.
-          </p>
+          <h3 class="info-title">{{ 'contact.infoTitle' | translate }}</h3>
+          <p class="info-desc">{{ 'contact.infoDesc' | translate }}</p>
         </div>
 
         <!-- Social Links -->
@@ -34,14 +29,12 @@
             <div class="social-icon-wrap" style="border-color: rgba(0,255,178,0.2); color: #00FFB2;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2
-                         2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                 <polyline points="22,6 12,13 2,6" />
               </svg>
             </div>
             <div class="social-text">
               <span class="social-label">Email</span>
-              <!-- use &#64; to avoid Angular template parser treating @ as binding -->
               <span class="social-handle">ahmedmohamedscw&#64;gmail.com</span>
             </div>
             <svg class="social-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -92,7 +85,7 @@
                          4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065
                          2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564
                          v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227
-                         .79２ ２４ １．７７１ ２４h２０．４５１C２３．２ ２４ ２４ ２３．２２７ ２４ ２２．２７１V１．７２９C２４
+                         .792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24
                          .774 23.2 0 22.222 0h.003z" />
               </svg>
             </div>
@@ -112,11 +105,13 @@
         <!-- Availability Badge -->
         <div class="availability-badge">
           <span class="avail-dot"></span>
-          <span>Available for new projects — <strong>Hire me</strong></span>
+          <span>
+            {{ 'contact.available' | translate }}
+            <strong>{{ 'contact.hireMe' | translate }}</strong>
+          </span>
         </div>
 
       </div><!-- /contact-left -->
-
 
       <!-- ─── RIGHT: Form ────────────────────────────── -->
       <div class="contact-form-wrap anim-el">
@@ -130,8 +125,8 @@
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <h3>Message sent!</h3>
-            <p>Thanks for reaching out. I'll get back to you shortly.</p>
+            <h3>{{ 'contact.form.successTitle' | translate }}</h3>
+            <p>{{ 'contact.form.successDesc' | translate }}</p>
           </div>
 
           <!-- Form -->
@@ -139,46 +134,43 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="name">Name</label>
-                <input id="name" type="text" placeholder="Mohamed Omar" [(ngModel)]="formData.name" name="name"
-                  required />
+                <label for="name">{{ 'contact.form.name' | translate }}</label>
+                <input id="name" type="text" [placeholder]="'contact.form.namePh' | translate"
+                  [(ngModel)]="formData.name" name="name" required />
               </div>
               <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" type="email" placeholder="mohamedomar&#64;example.com" [(ngModel)]="formData.email"
-                  name="email" required />
+                <label for="email">{{ 'contact.form.email' | translate }}</label>
+                <input id="email" type="email" [placeholder]="'contact.form.emailPh' | translate"
+                  [(ngModel)]="formData.email" name="email" required />
               </div>
             </div>
 
             <div class="form-group">
-              <label for="subject">Subject</label>
-              <input id="subject" type="text" placeholder="Project inquiry / Job opportunity"
+              <label for="subject">{{ 'contact.form.subject' | translate }}</label>
+              <input id="subject" type="text" [placeholder]="'contact.form.subjectPh' | translate"
                 [(ngModel)]="formData.subject" name="subject" />
             </div>
 
             <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" rows="5" placeholder="Tell me about your project or opportunity..."
+              <label for="message">{{ 'contact.form.message' | translate }}</label>
+              <textarea id="message" rows="5" [placeholder]="'contact.form.messagePh' | translate"
                 [(ngModel)]="formData.message" name="message" required>
               </textarea>
             </div>
 
             <button type="submit" class="btn-primary submit-btn" [disabled]="sending()">
-
               <ng-container *ngIf="!sending()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13" />
                   <polygon points="22 2 15 22 11 13 2 9 22 2" />
                 </svg>
-                Send Message
+                {{ 'contact.form.send' | translate }}
               </ng-container>
-
               <ng-container *ngIf="sending()">
                 <span class="spinner"></span>
-                Sending…
+                {{ 'contact.form.sending' | translate }}
               </ng-container>
-
             </button>
 
           </form>

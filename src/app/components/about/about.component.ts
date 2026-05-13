@@ -4,48 +4,37 @@ import {
   ElementRef,
   ViewChildren,
   QueryList,
+  inject,
+  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LanguageService } from '../../services/language.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css'],
 })
 export class AboutComponent implements OnInit {
   @ViewChildren('animEl') animEls!: QueryList<ElementRef>;
 
-  highlights = [
-    {
-      icon: '⚡',
-      label: '.NET Core Expert',
-      desc: 'Building high-performance APIs and microservices',
-    },
-    {
-      icon: '🔷',
-      label: 'Angular Architect',
-      desc: 'Scalable SPAs with reactive state and lazy loading',
-    },
-    {
-      icon: '☁️',
-      label: 'Cloud Native',
-      desc: 'Azure deployments with CI/CD pipelines',
-    },
-    {
-      icon: '🏗️',
-      label: 'Clean Architecture',
-      desc: 'SOLID principles & domain-driven design patterns',
-    },
-  ];
+  lang = inject(LanguageService);
 
-  ngOnInit(): void {
-    this.setupIntersectionObserver();
+  private observer!: IntersectionObserver;
+
+  constructor() {
+    // Re-observe elements every time the language signal changes
+    effect(() => {
+      this.lang.lang(); // subscribe to the signal
+      setTimeout(() => this.observeElements(), 50);
+    });
   }
 
-  private setupIntersectionObserver(): void {
-    const observer = new IntersectionObserver(
+  ngOnInit(): void {
+    this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
@@ -56,10 +45,12 @@ export class AboutComponent implements OnInit {
       { threshold: 0.15 },
     );
 
-    setTimeout(() => {
-      document
-        .querySelectorAll('.anim-el')
-        .forEach((el) => observer.observe(el));
-    }, 100);
+    setTimeout(() => this.observeElements(), 100);
+  }
+
+  private observeElements(): void {
+    document
+      .querySelectorAll('.anim-el')
+      .forEach((el) => this.observer.observe(el));
   }
 }

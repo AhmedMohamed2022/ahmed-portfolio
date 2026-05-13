@@ -3,23 +3,18 @@
 
     <!-- Header -->
     <div class="skills-header anim-el">
-      <p class="section-tag">// skills &amp; expertise</p>
+      <p class="section-tag">{{ 'skills.tag' | translate }}</p>
       <h2 class="section-title">
-        Tech I work with
-        <span class="accent-text"> daily</span>
+        {{ 'skills.title' | translate }}
+        <span class="accent-text">{{ 'skills.titleAccent' | translate }}</span>
       </h2>
-      <p class="skills-subtitle">
-        A curated set of technologies I've mastered across the full stack.
-      </p>
+      <p class="skills-subtitle">{{ 'skills.subtitle' | translate }}</p>
     </div>
 
     <!-- Categories Grid -->
     <div class="categories-grid">
-      <div
-        *ngFor="let cat of categories; let i = index"
-        class="skill-card card-dark anim-el"
-        [style.--card-delay]="(i * 0.12) + 's'"
-      >
+      <div *ngFor="let cat of categories; let i = index" class="skill-card card-dark anim-el"
+        [style.--card-delay]="(i * 0.12) + 's'">
         <!-- Card Header -->
         <div class="skill-card-header">
           <span class="cat-icon">{{ cat.icon }}</span>
@@ -29,25 +24,14 @@
         <!-- Skill Bars -->
         <div class="skill-bars">
           <div *ngFor="let skill of cat.skills" class="skill-bar-wrap">
-
             <div class="skill-bar-meta">
               <span class="skill-name">{{ skill.name }}</span>
               <span class="skill-level" [style.color]="cat.color">{{ skill.level }}%</span>
             </div>
-
-            <!--
-              KEY FIX:
-              • data-level   → read by IntersectionObserver in the TS
-              • .bar-fill    → starts at width:0 (CSS), TS sets final width after scroll
-              • background   → set here so each category keeps its colour
-            -->
             <div class="bar-track" [attr.data-level]="skill.level">
-              <div
-                class="bar-fill"
-                [style.background]="'linear-gradient(90deg,' + cat.color + '80,' + cat.color + ')'"
-              ></div>
+              <div class="bar-fill" [style.background]="'linear-gradient(90deg,' + cat.color + '80,' + cat.color + ')'">
+              </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -55,15 +39,12 @@
 
     <!-- Tech Badges -->
     <div class="badges-row anim-el">
-      <span
-        *ngFor="let badge of [
+      <span *ngFor="let badge of [
           'C#','.NET 8','Angular','TypeScript','Azure','Docker',
           'SQL Server','MongoDB','Redis','RxJS','NgRx','Tailwind',
           'CQRS','MediatR','EF Core','SignalR','REST',
           'Clean Arch','SOLID','DDD'
-        ]"
-        class="tech-badge"
-      >{{ badge }}</span>
+        ]" class="tech-badge">{{ badge }}</span>
     </div>
 
   </div>
