@@ -3,23 +3,23 @@
 
     <!-- Header -->
     <div class="edu-header anim-el">
-      <p class="section-tag">// education</p>
+      <p class="section-tag">{{ 'education.tag' | translate }}</p>
       <h2 class="section-title">
-        My <span class="accent-text">background</span>
+        {{ 'education.title' | translate }}
+        <span class="accent-text">{{ 'education.titleAccent' | translate }}</span>
       </h2>
-      <p class="edu-subtitle">
-        Academic foundation and professional training that shaped my engineering mindset.
-      </p>
+      <p class="edu-subtitle">{{ 'education.subtitle' | translate }}</p>
     </div>
 
     <!-- Cards Grid -->
     <div class="edu-grid">
-      <div *ngFor="let edu of educations; let i = index" class="edu-card card-dark anim-el"
+      <div *ngFor="let edu of educations(); let i = index" class="edu-card card-dark anim-el"
         [style.animation-delay]="(i * 0.15) + 's'">
         <!-- Top accent line -->
         <div class="edu-accent-line" [style.background]="edu.color"></div>
 
         <div class="edu-card-body">
+
           <!-- Icon & Period Row -->
           <div class="edu-top-row">
             <div class="edu-icon-wrap" [style.border-color]="edu.color + '33'">
@@ -38,16 +38,14 @@
 
           <!-- Degree & Institution -->
           <h3 class="edu-degree">{{ edu.degree }}</h3>
-          <p class="edu-institution" [style.color]="edu.color">
-            {{ edu.institution }}
-          </p>
+          <p class="edu-institution" [style.color]="edu.color">{{ edu.institution }}</p>
 
           <!-- Description -->
           <p class="edu-desc">{{ edu.description }}</p>
 
           <!-- Highlights -->
           <div class="edu-highlights">
-            <p class="highlights-label">Key Topics</p>
+            <p class="highlights-label">{{ 'education.keyTopics' | translate }}</p>
             <ul class="highlights-list">
               <li *ngFor="let h of edu.highlights">
                 <span class="highlight-dot" [style.color]="edu.color">▹</span>
@@ -55,25 +53,20 @@
               </li>
             </ul>
           </div>
+
         </div>
       </div>
     </div>
 
-    <!-- Certifications / Extra Banner -->
+    <!-- Certifications Banner -->
     <div class="certs-banner anim-el">
       <div class="certs-inner">
         <div class="certs-text">
-          <p class="certs-title">Continuous Learning</p>
-          <p class="certs-desc">
-            Regularly completing online courses and certifications in Azure, Docker,
-            Clean Architecture, and advanced Angular patterns.
-          </p>
+          <p class="certs-title">{{ 'education.continuousTitle' | translate }}</p>
+          <p class="certs-desc">{{ 'education.continuousDesc' | translate }}</p>
         </div>
         <div class="certs-badges">
-          <span class="cert-badge">☁️ Azure Fundamentals</span>
-          <span class="cert-badge">🐳 Docker & Containers</span>
-          <span class="cert-badge">🏗️ Clean Architecture</span>
-          <span class="cert-badge">🔷 Angular Advanced</span>
+          <span *ngFor="let cert of lang.t()['education']['certs']" class="cert-badge">{{ cert }}</span>
         </div>
       </div>
     </div>

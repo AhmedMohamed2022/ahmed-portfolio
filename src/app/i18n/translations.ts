@@ -184,7 +184,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
         {
           degree: 'Professional Diploma — Full Stack Development',
           institution: 'Information Technology Institute (ITI)',
-          period: '2022 – 2023',
+          period: '2025 – 2026',
           description:
             'Intensive professional diploma covering enterprise software development with a focus on .NET technologies, Angular, database design, and modern DevOps practices.',
           highlights: [
@@ -199,7 +199,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
         {
           degree: "Bachelor's Degree — Computer Science",
           institution: 'Faculty of Computer Science',
-          period: '2018 – 2022',
+          period: '2020 – 2024',
           description:
             'Comprehensive computer science education covering algorithms, data structures, software engineering, operating systems, networking, and database systems.',
           highlights: [
@@ -444,7 +444,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
         {
           degree: 'دبلوم احترافي — تطوير Full Stack',
           institution: 'معهد تكنولوجيا المعلومات (ITI)',
-          period: '2022 – 2023',
+          period: '2025 – 2026',
           description:
             'دبلوم مكثف يغطي تطوير البرمجيات المؤسسية مع التركيز على تقنيات .NET وAngular وتصميم قواعد البيانات وممارسات DevOps الحديثة.',
           highlights: [
@@ -459,7 +459,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
         {
           degree: 'بكالوريوس — علوم الحاسب',
           institution: 'كلية علوم الحاسب',
-          period: '2018 – 2022',
+          period: '2020 – 2024',
           description:
             'تعليم شامل في علوم الحاسب يغطي الخوارزميات وهياكل البيانات وهندسة البرمجيات وأنظمة التشغيل والشبكات وقواعد البيانات.',
           highlights: [

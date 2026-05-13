@@ -1,71 +1,71 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LanguageService } from '../../services/language.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
-export interface EducationItem {
-  degree: string;
-  institution: string;
-  period: string;
-  description: string;
-  highlights: string[];
+export interface EducationStatic {
   icon: string;
   color: string;
+  period: string;
 }
 
 @Component({
   selector: 'app-education',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.css'],
 })
 export class EducationComponent implements OnInit {
-  educations: EducationItem[] = [
-    {
-      degree: 'Professional Diploma — Full Stack Development',
-      institution: 'Information Technology Institute (ITI)',
-      period: '2022 – 2023',
-      description:
-        'Intensive professional diploma covering enterprise software development with a focus on .NET technologies, Angular, database design, and modern DevOps practices.',
-      highlights: [
-        'ASP.NET Core & Entity Framework Core in-depth',
-        'Angular with TypeScript and advanced SPA patterns',
-        'Clean Architecture & Design Patterns',
-        'SQL Server — advanced queries, indexing, optimization',
-        'Azure Cloud fundamentals and CI/CD with Azure DevOps',
-      ],
-      icon: '🎓',
-      color: '#00FFB2',
-    },
-    {
-      degree: "Bachelor's Degree — Computer Science",
-      institution: 'Faculty of Computer Science',
-      period: '2018 – 2022',
-      description:
-        'Comprehensive computer science education covering algorithms, data structures, software engineering, operating systems, networking, and database systems.',
-      highlights: [
-        'Algorithms & Data Structures',
-        'Object-Oriented Programming & Software Engineering',
-        'Database Systems & Data Modeling',
-        'Networking & Operating Systems fundamentals',
-        'Graduation Project — Full Stack Web Application',
-      ],
-      icon: '📚',
-      color: '#A78BFA',
-    },
+  lang = inject(LanguageService);
+
+  private staticEducations: EducationStatic[] = [
+    { icon: '🎓', color: '#00FFB2', period: '2022 – 2023' },
+    { icon: '📚', color: '#A78BFA', period: '2018 – 2022' },
   ];
 
+  // computed — reactive, re-evaluates when lang signal changes
+  educations = computed(() => {
+    const items = this.lang.t()['education'].items;
+    return this.staticEducations.map((s, i) => ({
+      ...s,
+      degree: items[i].degree,
+      institution: items[i].institution,
+      description: items[i].description,
+      highlights: items[i].highlights,
+    }));
+  });
+
+  private observer!: IntersectionObserver;
+
+  constructor() {
+    effect(() => {
+      this.lang.lang();
+      setTimeout(() => this.observeElements(), 50);
+    });
+  }
+
   ngOnInit(): void {
-    const observer = new IntersectionObserver(
+    this.observer = new IntersectionObserver(
       (entries) =>
-        entries.forEach(
-          (e) => e.isIntersecting && e.target.classList.add('visible'),
-        ),
+        entries.forEach((e) => {
+          if (e.isIntersecting && !e.target.classList.contains('visible')) {
+            e.target.classList.add('visible');
+            this.observer.unobserve(e.target); // fire once, stop the loop
+          }
+        }),
       { threshold: 0.1 },
     );
-    setTimeout(() => {
-      document
-        .querySelectorAll('.edu-header, .edu-card')
-        .forEach((el) => observer.observe(el));
-    }, 100);
+    setTimeout(() => this.observeElements(), 100);
+  }
+
+  private observeElements(): void {
+    document
+      .querySelectorAll('.edu-header, .edu-card, .certs-banner')
+      .forEach((el) => {
+        if (!el.classList.contains('visible')) {
+          this.observer.observe(el);
+        }
+      });
   }
 }
