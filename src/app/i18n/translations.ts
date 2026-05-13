@@ -237,9 +237,9 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
       hireMe: 'Hire me',
       form: {
         name: 'Name',
-        namePh: 'John Doe',
+        namePh: 'Mohamed Omar',
         email: 'Email',
-        emailPh: 'john@example.com',
+        emailPh: 'mohamedomar@example.com',
         subject: 'Subject',
         subjectPh: 'Project inquiry / Job opportunity',
         message: 'Message',
@@ -496,9 +496,9 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
       hireMe: 'وظّفني',
       form: {
         name: 'الاسم',
-        namePh: 'محمد أحمد',
+        namePh: 'محمد عمر',
         email: 'البريد الإلكتروني',
-        emailPh: 'mohammed@example.com',
+        emailPh: 'mohammedomar@example.com',
         subject: 'الموضوع',
         subjectPh: 'استفسار عن مشروع / فرصة عمل',
         message: 'الرسالة',
