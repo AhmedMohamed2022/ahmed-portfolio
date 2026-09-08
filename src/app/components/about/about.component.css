@@ -1,100 +1,142 @@
+/* ============================================================
+   About — dark rounded panel, mirrors the Figma "My Services"
+   section treatment (About has no direct Figma equivalent).
+   ============================================================ */
 .about-section {
-  padding: 7rem 1.5rem;
-  background: #0a0a0f;
+  padding: 3rem 0;
+}
+
+.about-panel {
+  background: var(--color-gray-900);
+  border-radius: var(--radius-panel);
+  margin-inline: clamp(1rem, 4vw, 3rem);
+  overflow: hidden;
   position: relative;
 }
 
-.about-section::before {
+/* faint ambient glow, echoes the 20%-opacity texture used behind
+   the Figma Services panel without needing an image asset */
+.about-panel::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 255, 178, 0.2),
-    transparent
+  inset: 0;
+  background: radial-gradient(
+    circle at 15% 10%,
+    rgba(253, 133, 58, 0.16),
+    transparent 55%
   );
+  pointer-events: none;
 }
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: center;
+.about-panel-inner {
+  position: relative;
+  padding-block: 4.5rem;
 }
 
-/* Text */
-.about-text {
+/* Header */
+.about-header {
+  max-width: 760px;
+}
+
+.about-bio {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
 }
 
 .about-para {
-  font-family: "DM Sans", sans-serif;
-  font-size: 1rem;
-  color: #9ca3af;
-  line-height: 1.8;
-  margin-bottom: 1.25rem;
-}
-
-.about-para strong {
-  color: #e5e7eb;
-  font-weight: 500;
-}
-
-.about-para em {
-  color: #00ffb2;
-  font-style: normal;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--color-gray-300);
 }
 
 .about-actions {
   display: flex;
-  gap: 0.75rem;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  gap: 1rem;
+  margin-top: 2.25rem;
 }
 
-/* Highlights */
+/* Ghost button, dark-panel variant (light border/text instead of
+   the light-theme .btn-pill-ghost, which assumes a white bg) */
+.about-github-btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 1rem 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.about-github-btn:hover {
+  border-color: var(--color-orange-400);
+  color: var(--color-orange-400);
+}
+
+/* Highlight cards row */
 .highlights-grid {
+  margin-top: 3.5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
 
 .highlight-card {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-card);
+  padding: 1.75rem 1.5rem;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.highlight-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(253, 133, 58, 0.4);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .highlight-icon {
-  font-size: 1.5rem;
-  margin-bottom: 0.25rem;
+  color: var(--color-orange-400);
+  margin-bottom: 0.9rem;
 }
 
 .highlight-label {
-  font-family: "Syne", sans-serif;
-  font-size: 0.95rem;
+  font-family: var(--font-body);
   font-weight: 700;
-  color: #f9fafb;
+  font-size: 1rem;
+  color: #fff;
 }
 
 .highlight-desc {
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.82rem;
-  color: #6b7280;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
   line-height: 1.5;
+  color: var(--color-gray-400);
+  margin-top: 0.4rem;
 }
 
-/* Animations */
+/* Scroll-reveal (unchanged mechanism — IntersectionObserver in
+   about.component.ts toggles .visible) */
 .anim-el {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(24px);
   transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .anim-el.visible {
@@ -102,16 +144,35 @@
   transform: translateY(0);
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 1024px) {
+  .highlights-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
+  .about-panel {
+    border-radius: 32px;
+    margin-inline: 0.75rem;
+  }
+
+  .about-panel-inner {
+    padding-block: 3rem;
+  }
+
   .highlights-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-actions a {
+    justify-content: center;
   }
 }

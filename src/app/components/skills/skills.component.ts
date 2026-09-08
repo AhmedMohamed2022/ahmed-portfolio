@@ -1,13 +1,15 @@
 import {
   Component,
-  OnInit,
   AfterViewInit,
+  ElementRef,
+  ViewChild,
   inject,
   effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../../services/language.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { IconComponent } from '../../shared/icon/icon.component';
 
 export interface Skill {
   name: string;
@@ -24,18 +26,44 @@ export interface SkillCategory {
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, IconComponent],
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.css'],
 })
 export class SkillsComponent implements AfterViewInit {
+  @ViewChild('cardsTrack') cardsTrack!: ElementRef<HTMLDivElement>;
+
   lang = inject(LanguageService);
+
+  /** Real tech list — also feeds the Figma-style scrolling ticker. */
+  techBadges = [
+    'C#',
+    '.NET 8',
+    'Angular',
+    'TypeScript',
+    'Azure',
+    'Docker',
+    'SQL Server',
+    'MongoDB',
+    'Redis',
+    'RxJS',
+    'NgRx',
+    'Tailwind',
+    'CQRS',
+    'MediatR',
+    'EF Core',
+    'SignalR',
+    'REST',
+    'Clean Arch',
+    'SOLID',
+    'DDD',
+  ];
 
   categories: SkillCategory[] = [
     {
       title: 'Backend',
-      icon: '⚙️',
-      color: '#00FFB2',
+      icon: 'terminal',
+      color: '#FD853A',
       skills: [
         { name: 'ASP.NET Core', level: 92 },
         { name: 'Entity Framework', level: 88 },
@@ -46,8 +74,8 @@ export class SkillsComponent implements AfterViewInit {
     },
     {
       title: 'Frontend',
-      icon: '🔷',
-      color: '#00C8FF',
+      icon: 'monitor',
+      color: '#4F86F7',
       skills: [
         { name: 'Angular 17+', level: 90 },
         { name: 'TypeScript', level: 88 },
@@ -58,7 +86,7 @@ export class SkillsComponent implements AfterViewInit {
     },
     {
       title: 'Database',
-      icon: '🗄️',
+      icon: 'database',
       color: '#A78BFA',
       skills: [
         { name: 'SQL Server', level: 88 },
@@ -69,7 +97,7 @@ export class SkillsComponent implements AfterViewInit {
     },
     {
       title: 'Cloud & DevOps',
-      icon: '☁️',
+      icon: 'cloud',
       color: '#FB923C',
       skills: [
         { name: 'Azure', level: 78 },
@@ -80,7 +108,7 @@ export class SkillsComponent implements AfterViewInit {
     },
     {
       title: 'Architecture',
-      icon: '🏗️',
+      icon: 'layers',
       color: '#F472B6',
       skills: [
         { name: 'Clean Architecture', level: 88 },
@@ -90,6 +118,9 @@ export class SkillsComponent implements AfterViewInit {
       ],
     },
   ];
+
+  /** Active card index — drives the pagination dots on mobile. */
+  activeIndex = 0;
 
   constructor() {
     // Re-run animations after language switch re-renders the DOM
@@ -101,6 +132,33 @@ export class SkillsComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     requestAnimationFrame(() => this.initAnimations());
+  }
+
+  /** Scrolls the mobile carousel to a given category (dot click). */
+  scrollToIndex(i: number): void {
+    const track = this.cardsTrack?.nativeElement;
+    if (!track) return;
+    const card = track.children[i] as HTMLElement | undefined;
+    if (card) {
+      track.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+    }
+  }
+
+  /** Tracks which card is centered in view while the user swipes. */
+  onTrackScroll(): void {
+    const track = this.cardsTrack?.nativeElement;
+    if (!track) return;
+    let closest = 0;
+    let closestDist = Infinity;
+    Array.from(track.children).forEach((child, i) => {
+      const el = child as HTMLElement;
+      const dist = Math.abs(el.offsetLeft - track.scrollLeft);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = i;
+      }
+    });
+    this.activeIndex = closest;
   }
 
   private initAnimations(): void {
@@ -117,7 +175,7 @@ export class SkillsComponent implements AfterViewInit {
     );
 
     document
-      .querySelectorAll('.skills-header, .skill-card, .badges-row')
+      .querySelectorAll('.skills-header, .skill-card')
       .forEach((el) => fadeObserver.observe(el));
 
     const barObserver = new IntersectionObserver(

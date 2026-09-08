@@ -1,7 +1,5 @@
-/* ============================================================
-   Google Fonts
-   ============================================================ */
 @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap");
 
 /* ============================================================
    Tailwind v4 — single import replaces all @tailwind directives
@@ -12,6 +10,7 @@
    Tailwind v4 Theme Tokens  (@theme replaces tailwind.config.js)
    ============================================================ */
 :root {
+  /* ── LEGACY tokens — kept until all sections are migrated ── */
   --font-family-display: "Syne", sans-serif;
   --font-family-body: "DM Sans", sans-serif;
   --font-family-mono: "JetBrains Mono", monospace;
@@ -50,6 +49,155 @@
       opacity: 1;
     }
   }
+
+  /* ── NEW design system — extracted from the Figma file ──── */
+  --font-display: "Urbanist", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+
+  /* Neutrals */
+  --color-gray-25: #fcfcfd;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f2f4f7;
+  --color-gray-200: #e4e7ec;
+  --color-gray-300: #d0d5dd;
+  --color-gray-400: #98a2b3;
+  --color-gray-500: #667085;
+  --color-gray-600: #475467;
+  --color-gray-700: #344054;
+  --color-gray-800: #1d2939;
+  --color-gray-900: #171717;
+
+  /* Brand accent */
+  --color-orange-25: #fffaf5;
+  --color-orange-100: #ffead5;
+  --color-orange-300: #feb273;
+  --color-orange-400: #fd853a;
+  --color-orange-500: #fb6514;
+
+  /* One-off surface used by the footer panel */
+  --color-footer: #272727;
+
+  /* Radius scale */
+  --radius-panel: 50px;
+  --radius-card: 24px;
+  --radius-btn: 32px;
+
+  --animate-marquee: marquee 28s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* ============================================================
+   NEW design-system primitives
+   Shared, reusable across every section as we migrate it —
+   distinct names from the legacy .btn-primary/.btn-outline/etc.
+   above so nothing already built breaks while we go section by
+   section.
+   ============================================================ */
+.btn-pill-solid {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.125rem;
+  letter-spacing: -0.015em;
+  color: #fff;
+  background: var(--color-orange-400);
+  border-radius: 999px;
+  padding: 1.1rem 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-pill-solid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(253, 133, 58, 0.35);
+}
+
+.btn-pill-ghost {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1.125rem;
+  letter-spacing: -0.015em;
+  color: var(--color-gray-700);
+  background: transparent;
+  border: 1.5px solid var(--color-gray-300);
+  border-radius: 999px;
+  padding: 1.1rem 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-pill-ghost:hover {
+  border-color: var(--color-orange-400);
+  color: var(--color-orange-400);
+}
+
+/* Recurring "tag + two-clause accent heading" pattern seen in
+   nearly every Figma section (Services, Work Experience, Why Hire
+   Me, Testimonials, Portfolio, CTA, Blog, Footer). Shared here so
+   each section we migrate stays visually consistent. */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-orange-500);
+  background: var(--color-orange-100);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+}
+
+.section-heading {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--color-gray-700);
+  margin-top: 1.1rem;
+}
+
+.section-heading-accent {
+  color: var(--color-orange-400);
+}
+
+/* Modifiers for the same two primitives when placed on a dark
+   panel (Services-style, and later Testimonials/Footer). */
+.section-eyebrow.on-dark {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-orange-300);
+}
+
+.section-heading.on-dark {
+  color: #fff;
+}
+
+.container-page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-inline: clamp(1.25rem, 5vw, 4.5rem);
 }
 
 /* ============================================================
@@ -65,12 +213,15 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #0a0a0f;
+  /* New Figma canvas is light; sections not yet migrated paint
+     their own dark background locally, so this is safe to flip
+     now rather than waiting for every section to be rebuilt. */
+  background-color: var(--color-gray-25);
 }
 
 body {
-  font-family: "DM Sans", sans-serif;
-  color: #e5e7eb;
+  font-family: var(--font-body);
+  color: var(--color-gray-700);
   overflow-x: hidden;
 }
 
@@ -81,10 +232,10 @@ body {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: var(--color-gray-100);
 }
 ::-webkit-scrollbar-thumb {
-  background: #00ffb2;
+  background: var(--color-orange-400);
   border-radius: 2px;
 }
 

@@ -1,85 +1,59 @@
-import { Component, OnInit, inject, effect, computed } from '@angular/core';
+import { Component, AfterViewInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../../services/language.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
-
-export interface ExperienceStatic {
-  techStack: string[];
-  current: boolean;
-}
+import { IconComponent } from '../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, IconComponent],
   templateUrl: './experience.component.html',
   styleUrls: ['./experience.component.css'],
 })
-export class ExperienceComponent implements OnInit {
+export class ExperienceComponent implements AfterViewInit {
   lang = inject(LanguageService);
 
-  private staticExperiences: ExperienceStatic[] = [
-    {
-      techStack: [
-        'ASP.NET Core',
-        'Angular',
-        'SQL Server',
-        'Azure',
-        'Docker',
-        'Redis',
-        'SignalR',
-        'CQRS',
-      ],
-      current: true,
-    },
+  techStackByRole: string[][] = [
+    [
+      'ASP.NET Core',
+      'Angular',
+      'SQL Server',
+      'Azure',
+      'Docker',
+      'Redis',
+      'SignalR',
+      'CQRS',
+    ],
   ];
 
-  experiences = computed(() => {
-    const items = this.lang.t()['experience'].items;
-    return this.staticExperiences.map((s, i) => ({
-      ...s,
-      role: items[i].role,
-      company: items[i].company,
-      type: items[i].type,
-      period: items[i].period,
-      location: items[i].location,
-      description: items[i].description,
-      responsibilities: items[i].responsibilities,
+  get items() {
+    const items = this.lang.t()['experience'].items as any[];
+    return items.map((item, i) => ({
+      ...item,
+      techStack: this.techStackByRole[i] ?? [],
     }));
-  });
-
-  metrics = computed(() => this.lang.t()['experience'].metrics);
-
-  private observer!: IntersectionObserver;
-
-  constructor() {
-    effect(() => {
-      this.lang.lang();
-      setTimeout(() => this.observeElements(), 50);
-    });
   }
 
-  ngOnInit(): void {
-    this.observer = new IntersectionObserver(
+  get metrics() {
+    return this.lang.t()['experience'].metrics as any[];
+  }
+
+  ngAfterViewInit(): void {
+    const observer = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
-          if (e.isIntersecting && !e.target.classList.contains('visible')) {
+          if (e.isIntersecting) {
             e.target.classList.add('visible');
-            this.observer.unobserve(e.target);
+            observer.unobserve(e.target);
           }
         }),
       { threshold: 0.1 },
     );
-    setTimeout(() => this.observeElements(), 100);
-  }
-
-  private observeElements(): void {
-    document
-      .querySelectorAll('.exp-header, .exp-card, .exp-metric')
-      .forEach((el) => {
-        if (!el.classList.contains('visible')) {
-          this.observer.observe(el);
-        }
-      });
+    setTimeout(() => {
+      document
+        .querySelectorAll('#experience .anim-el')
+        .forEach((el) => observer.observe(el));
+    }, 100);
   }
 }

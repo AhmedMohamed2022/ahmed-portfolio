@@ -1,65 +1,135 @@
+/* ============================================================
+   Skills — Figma "skills ticker" marquee + "My Services"
+   masked-card treatment applied to the real skill categories
+   ============================================================ */
 .skills-section {
-  padding: 7rem 1.5rem;
-  background: #111118;
-  position: relative;
+  padding: 6rem 0;
+  overflow: hidden;
 }
 
-.skills-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0,255,178,0.15), transparent);
+/* ── Ticker marquee (Figma "skills ticker" section, literal reuse
+   since its content — repeating keyword strip — is a perfect
+   match for a real tech-stack list) ─────────────────────────── */
+.skills-ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 5rem;
 }
 
-/* ── Header ─────────────────────────────────────── */
+.skills-ticker {
+  transform: rotate(-2deg) scale(1.04);
+  background: var(--color-orange-500);
+  border-radius: 24px 0 24px 0; /* two-corner rounding, per the Figma detail */
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(251, 101, 20, 0.25);
+}
+
+.skills-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: var(--animate-marquee);
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.6vw, 2.5rem);
+  letter-spacing: -0.02em;
+  color: #fff;
+  white-space: nowrap;
+  padding: 1rem 1.5rem;
+}
+
+.ticker-star {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ── Header ───────────────────────────────────────────────── */
 .skills-header {
+  max-width: 640px;
+  margin-inline: auto;
   text-align: center;
-  margin-bottom: 3.5rem;
 }
 
 .skills-subtitle {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  color: #6B7280;
-  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--color-gray-500);
+  margin-top: 1.1rem;
 }
 
-/* ── Grid ───────────────────────────────────────── */
-.categories-grid {
+/* ── Category cards ───────────────────────────────────────── */
+.cards-track {
+  margin-top: 3.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-  margin-bottom: 3rem;
+  gap: 1.5rem;
 }
 
-/* ── Card ───────────────────────────────────────── */
 .skill-card {
-  padding: 1.75rem;
-  /* stagger via CSS custom property set inline */
-  transition-delay: var(--card-delay, 0s);
+  position: relative;
+  background: var(--color-gray-900);
+  /* organic asymmetric "masked" corners, approximating the
+     Figma blob-mask card silhouette */
+  border-radius: 40px 16px 40px 16px;
+  padding: 2rem 1.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
 }
 
-.skill-card-header {
+.skill-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--cat-color) 50%, transparent);
+}
+
+/* faint dot-grid texture, echoes the 20%-opacity background
+   image behind the Figma Services cards */
+.skill-card-texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 14px 14px;
+  pointer-events: none;
+}
+
+.skill-card-chip {
+  position: absolute;
+  top: 1.5rem;
+  inset-inline-end: 1.5rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  justify-content: center;
+  color: var(--cat-color);
+  background: color-mix(in srgb, var(--cat-color) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cat-color) 40%, transparent);
 }
-
-.cat-icon { font-size: 1.4rem; }
 
 .cat-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 1rem;
+  position: relative;
+  font-family: var(--font-body);
   font-weight: 700;
-  letter-spacing: 0.02em;
+  font-size: 1.35rem;
+  color: var(--cat-color);
+  margin-bottom: 1.5rem;
+  padding-inline-end: 3rem;
 }
 
-/* ── Skill rows ─────────────────────────────────── */
 .skill-bars {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -68,79 +138,77 @@
 .skill-bar-meta {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.35rem;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
 }
 
 .skill-name {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  color: #D1D5DB;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-gray-300);
 }
 
 .skill-level {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cat-color);
 }
 
-/* ── Bar track ──────────────────────────────────── */
 .bar-track {
-  height: 5px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 4px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 
-/* ── Bar fill ───────────────────────────────────── */
-/*
-  CRITICAL: width starts at 0.
-  The IntersectionObserver in the TS sets element.style.width = level + '%'
-  after the element enters the viewport.
-  The CSS transition animates from 0 → that value smoothly.
-  We do NOT bind [style.width] in the template — that would fight with this.
-*/
 .bar-fill {
   height: 100%;
-  width: 0%;                                    /* ← always starts at 0 */
-  border-radius: 4px;
-  transition: width 1.1s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: width;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--cat-color) 60%, transparent),
+    var(--cat-color)
+  );
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── Badges ─────────────────────────────────────── */
-.badges-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
+/* ── Pagination dots (Figma detail — functional on mobile) ──── */
+.cards-dots {
+  display: none;
   justify-content: center;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  gap: 0.5rem;
+  margin-top: 1.75rem;
 }
 
-.tech-badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: #9CA3AF;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
-  padding: 0.3rem 0.75rem;
-  border-radius: 100px;
-  transition: all 0.25s ease;
-  cursor: default;
+.cards-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-gray-300);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    width 0.2s ease;
 }
 
-.tech-badge:hover {
-  color: #00FFB2;
-  border-color: rgba(0,255,178,0.25);
-  background: rgba(0,255,178,0.05);
+.cards-dot.active {
+  background: var(--color-orange-400);
+  width: 22px;
+  border-radius: 999px;
 }
 
-/* ── Shared fade-up animation ───────────────────── */
+/* ── Scroll-reveal ────────────────────────────────────────── */
 .anim-el {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .anim-el.visible {
@@ -148,11 +216,46 @@
   transform: translateY(0);
 }
 
-/* ── Responsive ─────────────────────────────────── */
-@media (max-width: 1024px) {
-  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+/* ============================================================
+   Responsive — below 900px the grid becomes a snap-scroll
+   carousel with working pagination dots
+   ============================================================ */
+@media (max-width: 1100px) {
+  .cards-track {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-@media (max-width: 600px) {
-  .categories-grid { grid-template-columns: 1fr; }
+@media (max-width: 900px) {
+  .cards-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1.25rem;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+
+  .cards-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skill-card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+
+  .cards-dots {
+    display: flex;
+  }
+}
+
+@media (max-width: 560px) {
+  .skill-card {
+    flex-basis: 92%;
+  }
+
+  .ticker-item {
+    font-size: 1.4rem;
+  }
 }

@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   AfterViewInit,
   signal,
   computed,
@@ -19,7 +18,18 @@ export interface ProjectStatic {
   featured: boolean;
   gradient: string;
   filterTags: string[];
+  screenshots: [string, string];
 }
+
+export interface Project extends ProjectStatic {
+  title: string;
+  subtitle: string;
+  description: string;
+  features: string[];
+  badge: string;
+}
+
+type SlideDirection = 'next' | 'prev';
 
 @Component({
   selector: 'app-projects',
@@ -28,10 +38,8 @@ export interface ProjectStatic {
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
 })
-export class ProjectsComponent implements OnInit, AfterViewInit {
+export class ProjectsComponent implements AfterViewInit {
   lang = inject(LanguageService);
-
-  activeFilter = signal<string>('All');
 
   // Static (non-translatable) project data
   staticProjects: ProjectStatic[] = [
@@ -47,13 +55,37 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       ],
       github:
         'https://github.com/AhmedMohamed2022/MasjidStoryProject-Front-end',
-      demo: 'https://masjidstory.netlify.app/home',
+      demo: 'https://masjid-story-front-end.vercel.app/',
       featured: true,
-      gradient: 'linear-gradient(135deg, #00FFB2 0%, #00A8FF 100%)',
+      gradient: 'linear-gradient(135deg, #FD853A 0%, #FB6514 100%)',
       filterTags: ['All', '.NET', 'Angular', 'SaaS', 'Full Stack'],
+      screenshots: [
+        '/img/projects/masjidstory-1.png',
+        '/img/projects/masjidstory-2.png',
+      ],
     },
     {
       id: 2,
+      techStack: [
+        'ASP.NET MVC',
+        'Razor Views',
+        'Entity Framework',
+        'SQL Server',
+        'ASP.NET Identity',
+      ],
+      github:
+        'https://github.com/AhmedMohamed2022/A3lanly-Ad-Management-Platform',
+      demo: 'https://www.a3lanly.somee.com/',
+      featured: false,
+      gradient: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+      filterTags: ['All', '.NET', 'Full Stack'],
+      screenshots: [
+        '/img/projects/a3lanly-1.png',
+        '/img/projects/a3lanly-2.png',
+      ],
+    },
+    {
+      id: 3,
       techStack: [
         'ASP.NET Core',
         'Angular',
@@ -66,9 +98,13 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       featured: true,
       gradient: 'linear-gradient(135deg, #A78BFA 0%, #F472B6 100%)',
       filterTags: ['All', '.NET', 'Angular', 'SaaS', 'Full Stack'],
+      screenshots: [
+        '/img/projects/pointpay-1.png',
+        '/img/projects/pointpay-2.png',
+      ],
     },
     {
-      id: 3,
+      id: 4,
       techStack: [
         'ASP.NET Core',
         'Angular',
@@ -77,15 +113,19 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
         'CQRS',
         'Stripe API',
       ],
-      github: 'https://github.com/ahmed-alsoghayar/online-bookstore',
+      github: 'https://github.com/AhmedMohamed2022/online-bookstore',
       featured: false,
       gradient: 'linear-gradient(135deg, #FB923C 0%, #F59E0B 100%)',
       filterTags: ['All', '.NET', 'Angular', 'Full Stack'],
+      screenshots: [
+        '/img/projects/bookstore-1.png',
+        '/img/projects/bookstore-2.png',
+      ],
     },
   ];
 
   // Merged project list: static data + translated content
-  get projects() {
+  get projects(): Project[] {
     const items = this.lang.t()['projects'].items;
     return this.staticProjects.map((s, i) => ({
       ...s,
@@ -97,18 +137,11 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     }));
   }
 
-  // Filter labels come from translations too
-  // get filters(): string[] {
-  //   return this.lang.t()['projects'].filters;
-  // }
+  get filters(): string[] {
+    return this.lang.t()['projects'].filters;
+  }
 
-  // filteredProjects = computed(() =>
-  //   this.projects.filter((p) => p.filterTags.includes(this.activeFilter())),
-  // );
-  // Use index to track active filter — language-independent
-  activeFilterIndex = signal<number>(0);
-
-  // English tags used for filtering logic — never changes
+  // English tags used for filtering logic — never changes with language
   private readonly filterTagsEn = [
     'All',
     '.NET',
@@ -117,93 +150,108 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
     'Full Stack',
   ];
 
-  // Displayed filter labels come from translations
-  get filters(): string[] {
-    return this.lang.t()['projects'].filters;
-  }
+  activeFilterIndex = signal<number>(0);
+  activeProjectIndex = signal<number>(0);
+
+  imgFailed = { back: false, front: false };
+  imgFailedOutgoing = { back: false, front: false };
+
+  outgoingProject = signal<Project | null>(null);
+  direction = signal<SlideDirection>('next');
+  transitionState = signal<'idle' | 'sliding'>('idle');
+  private transitionTimer: ReturnType<typeof setTimeout> | undefined;
+  private readonly TRANSITION_MS = 620;
 
   filteredProjects = computed(() => {
     const tag = this.filterTagsEn[this.activeFilterIndex()];
     return this.projects.filter((p) => p.filterTags.includes(tag));
   });
 
-  setFilter(index: number): void {
-    this.activeFilterIndex.set(index);
+  get activeProject(): Project | null {
+    const list = this.filteredProjects();
+    return list[this.activeProjectIndex()] ?? null;
   }
 
-  sectionVisible = signal<boolean>(false);
+  setFilter(index: number): void {
+    this.cancelTransition();
+    this.activeFilterIndex.set(index);
+    this.activeProjectIndex.set(0);
+    this.imgFailed = { back: false, front: false };
+  }
+
+  nextProject(): void {
+    const len = this.filteredProjects().length;
+    if (!len) return;
+    this.goTo((this.activeProjectIndex() + 1) % len, 'next');
+  }
+
+  prevProject(): void {
+    const len = this.filteredProjects().length;
+    if (!len) return;
+    this.goTo((this.activeProjectIndex() - 1 + len) % len, 'prev');
+  }
+
+  goToProject(i: number): void {
+    if (i === this.activeProjectIndex()) return;
+    this.goTo(i, i > this.activeProjectIndex() ? 'next' : 'prev');
+  }
+
+  private goTo(newIndex: number, dir: SlideDirection): void {
+    if (this.transitionState() === 'sliding') return;
+    const current = this.activeProject;
+    if (!current || newIndex === this.activeProjectIndex()) return;
+
+    this.outgoingProject.set(current);
+    this.imgFailedOutgoing = { ...this.imgFailed };
+    this.direction.set(dir);
+    this.transitionState.set('sliding');
+
+    this.activeProjectIndex.set(newIndex);
+    this.imgFailed = { back: false, front: false };
+
+    clearTimeout(this.transitionTimer);
+    this.transitionTimer = setTimeout(() => {
+      this.transitionState.set('idle');
+      this.outgoingProject.set(null);
+    }, this.TRANSITION_MS);
+  }
+
+  private cancelTransition(): void {
+    clearTimeout(this.transitionTimer);
+    this.transitionState.set('idle');
+    this.outgoingProject.set(null);
+  }
+
+  onImgError = (slot: 'back' | 'front'): void => {
+    this.imgFailed[slot] = true;
+  };
+
+  noopImgError = (_slot: 'back' | 'front'): void => {};
 
   constructor() {
     effect(() => {
-      this.filteredProjects();
-      if (this.sectionVisible()) {
-        requestAnimationFrame(() => {
-          document
-            .querySelectorAll('.project-card:not(.visible)')
-            .forEach((el) => el.classList.add('visible'));
-        });
-      }
-    });
-
-    // Reset active filter to first option when language changes
-    effect(() => {
-      const filters = this.lang.t()['projects'].filters;
-      this.activeFilter.set(filters[0]);
+      this.lang.lang();
+      this.cancelTransition();
+      this.activeFilterIndex.set(0);
+      this.activeProjectIndex.set(0);
     });
   }
 
-  ngOnInit(): void {}
-
   ngAfterViewInit(): void {
-    const sectionObserver = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) this.sectionVisible.set(true);
-        });
-      },
-      { threshold: 0.05 },
-    );
-
-    const section = document.querySelector('#projects');
-    if (section) sectionObserver.observe(section);
-
-    const headerObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            headerObserver.unobserve(e.target);
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.1 },
     );
 
-    const header = document.querySelector('.projects-header');
-    if (header) headerObserver.observe(header);
-
-    this.observeCards();
-  }
-
-  private observeCards(): void {
-    const cardObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, idx) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => entry.target.classList.add('visible'), idx * 100);
-            cardObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08 },
-    );
-
     document
-      .querySelectorAll('.project-card')
-      .forEach((el) => cardObserver.observe(el));
+      .querySelectorAll('#projects .anim-el')
+      .forEach((el) => revealObserver.observe(el));
   }
-
-  // setFilter(filter: string): void {
-  //   this.activeFilter.set(filter);
-  // }
 }

@@ -1,86 +1,70 @@
-<section id="experience" class="exp-section">
-  <div class="section-container">
+<section id="experience" class="experience-section">
+  <div class="container-page">
 
     <!-- Header -->
     <div class="exp-header anim-el">
-      <p class="section-tag">{{ 'experience.tag' | translate }}</p>
-      <h2 class="section-title">
+      <span class="section-eyebrow">{{ 'experience.tag' | translate }}</span>
+      <h2 class="section-heading">
         {{ 'experience.title' | translate }}
-        <span class="accent-text">{{ 'experience.titleAccent' | translate }}</span>
+        <span class="section-heading-accent">{{ 'experience.titleAccent' | translate }}</span>
       </h2>
     </div>
 
-    <!-- Timeline -->
-    <div class="timeline">
-      <div *ngFor="let exp of experiences(); let i = index" class="exp-card anim-el"
-        [style.animation-delay]="(i * 0.15) + 's'">
-
-        <!-- Timeline dot -->
-        <div class="timeline-dot" [class.current]="exp.current"></div>
-
-        <div class="exp-card-inner card-dark">
-
-          <!-- Header Row -->
-          <div class="exp-card-header">
-            <div class="exp-meta">
-              <div class="exp-title-row">
-                <h3 class="exp-role">{{ exp.role }}</h3>
-                <span *ngIf="exp.current" class="current-badge">
-                  {{ 'experience.current' | translate }}
-                </span>
-              </div>
-              <div class="exp-company-row">
-                <span class="exp-company">{{ exp.company }}</span>
-                <span class="exp-separator">·</span>
-                <span class="exp-type">{{ exp.type }}</span>
-              </div>
-              <div class="exp-details-row">
-                <span class="exp-period">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  {{ exp.period }}
-                </span>
-                <span class="exp-period">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                  {{ exp.location }}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Description -->
-          <p class="exp-desc">{{ exp.description }}</p>
-
-          <!-- Responsibilities -->
-          <ul class="exp-responsibilities">
-            <li *ngFor="let item of exp.responsibilities">
-              <span class="resp-arrow">▹</span>
-              {{ item }}
-            </li>
-          </ul>
-
-          <!-- Tech Stack -->
-          <div class="exp-tech">
-            <span *ngFor="let tech of exp.techStack" class="tech-tag">{{ tech }}</span>
-          </div>
-
+    <!-- Timeline: company/dates | dotted node track | role/description -->
+    <div class="timeline anim-el" [style.--rows]="items.length">
+      <ng-container *ngFor="let item of items; let i = index">
+        <div class="tl-company">
+          <p class="tl-company-name">{{ item.company }}</p>
+          <p class="tl-period">{{ item.period }}</p>
+          <p class="tl-meta">{{ item.type }} &middot; {{ item.location }}</p>
         </div>
+
+        <div class="tl-track">
+          <span class="tl-node" [class.node-current]="item.current" [class.node-alt]="i % 2 === 1"></span>
+        </div>
+
+        <div class="tl-role">
+          <div class="tl-role-row">
+            <p class="tl-role-title">{{ item.role }}</p>
+            <span class="tl-current-badge" *ngIf="item.current">
+              {{ 'experience.current' | translate }}
+            </span>
+          </div>
+          <p class="tl-role-desc">{{ item.description }}</p>
+        </div>
+      </ng-container>
+
+      <!-- connecting dotted line, spans between the first and last node -->
+      <div class="tl-line" *ngIf="items.length > 1" aria-hidden="true"></div>
+    </div>
+
+    <!-- Real responsibilities — additive, not a Figma element, but
+         real content that shouldn't be dropped just to match the
+         (much sparser) Figma timeline card. -->
+    <div class="exp-responsibilities anim-el" *ngIf="items[0]?.responsibilities?.length">
+      <h3 class="exp-subheading">Key Responsibilities</h3>
+      <ul class="resp-grid">
+        <li *ngFor="let r of items[0].responsibilities">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          {{ r }}
+        </li>
+      </ul>
+
+      <div class="tech-stack" *ngIf="items[0].techStack?.length">
+        <span *ngFor="let tech of items[0].techStack" class="tech-tag">{{ tech }}</span>
       </div>
     </div>
 
-    <!-- Impact Metrics -->
-    <div class="metrics-row">
-      <div class="exp-metric anim-el" *ngFor="let m of metrics()">
-        <div class="metric-icon">{{ m.icon }}</div>
-        <div class="metric-value">{{ m.value }}</div>
-        <div class="metric-label">{{ m.label }}</div>
+    <!-- Real metrics row -->
+    <div class="exp-metrics">
+      <div class="exp-metric anim-el" *ngFor="let m of metrics">
+        <span class="metric-icon">
+          <app-icon [name]="m.icon" [size]="22"></app-icon>
+        </span>
+        <span class="metric-value">{{ m.value }}</span>
+        <span class="metric-label">{{ m.label }}</span>
       </div>
     </div>
 

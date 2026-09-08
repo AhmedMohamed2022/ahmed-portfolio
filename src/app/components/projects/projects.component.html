@@ -1,116 +1,177 @@
 <section id="projects" class="projects-section">
-  <div class="section-container">
+  <div class="container-page">
 
     <!-- Header -->
     <div class="projects-header anim-el">
-      <p class="section-tag">{{ 'projects.tag' | translate }}</p>
-      <h2 class="section-title">
-        {{ 'projects.title' | translate }}
-        <span class="accent-text">{{ 'projects.titleAccent' | translate }}</span>
-      </h2>
+      <div class="projects-header-top">
+        <div>
+          <span class="section-eyebrow">{{ 'projects.tag' | translate }}</span>
+          <h2 class="section-heading">
+            {{ 'projects.title' | translate }}
+            <span class="section-heading-accent">{{ 'projects.titleAccent' | translate }}</span>
+          </h2>
+        </div>
+        <a href="https://github.com/AhmedMohamed2022" target="_blank" rel="noopener noreferrer"
+          class="btn-pill-solid projects-see-all">
+          {{ 'projects.viewAll' | translate }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
       <p class="projects-subtitle">{{ 'projects.subtitle' | translate }}</p>
 
-      <!-- Filter Buttons -->
+      <!-- Filter pills -->
       <div class="filter-row">
-        <button *ngFor="let f of filters; let i = index" class="filter-btn" [class.active]="activeFilterIndex() === i"
+        <button *ngFor="let f of filters; let i = index" class="filter-pill" [class.active]="activeFilterIndex() === i"
           (click)="setFilter(i)">
           {{ f }}
         </button>
       </div>
     </div>
 
-    <!-- Projects Grid -->
-    <div class="projects-grid">
-      <article *ngFor="let project of filteredProjects()" class="project-card card-dark"
-        [class.visible]="sectionVisible()" [class.featured]="project.featured">
+    <!-- Reusable markup: BACK screen mockup -->
+    <ng-template #mockBack let-proj let-imgState="imgState" let-onErr="onErr">
+      <div class="mock-screen mock-screen-back" [style.background]="proj.gradient">
+        <img *ngIf="!imgState.back" [src]="proj.screenshots[0]" (error)="onErr('back')" alt="" class="mock-real-img" />
+        <ng-container *ngIf="imgState.back">
+          <div class="mock-chrome">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="mock-body">
+            <div class="mock-line" style="width: 70%"></div>
+            <div class="mock-line" style="width: 45%"></div>
+            <div class="mock-block"></div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-template>
 
-        <!-- Gradient top bar -->
-        <div class="card-topbar" [style.background]="project.gradient"></div>
-
-        <!-- Card Header -->
-        <div class="card-header">
-          <div class="card-title-row">
-            <div>
-              <span class="project-badge">{{ project.badge }}</span>
-              <h3 class="project-title">{{ project.title }}</h3>
-              <p class="project-subtitle-text">{{ project.subtitle }}</p>
-            </div>
-
-            <!-- Icon Links -->
-            <div class="project-links">
-              <a [href]="project.github" target="_blank" rel="noopener noreferrer" class="icon-link" title="GitHub">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839
-                           9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7
-                           -2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462
-                           -1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03
-                           1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088
-                           .636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984
-                           1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75
-                           1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.337
-                           1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1
-                           2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687
-                           -4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415
-                           -.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418
-                           22 12c0-5.523-4.477-10-10-10z" />
-                </svg>
-              </a>
-              <a *ngIf="project.demo" [href]="project.demo" target="_blank" rel="noopener noreferrer" class="icon-link"
-                title="Live Demo">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
-              </a>
+    <!-- Reusable markup: FRONT screen mockup -->
+    <ng-template #mockFront let-proj let-imgState="imgState" let-onErr="onErr">
+      <div class="mock-screen mock-screen-front" [style.background]="proj.gradient">
+        <img *ngIf="!imgState.front" [src]="proj.screenshots[1]" (error)="onErr('front')" alt=""
+          class="mock-real-img" />
+        <ng-container *ngIf="imgState.front">
+          <div class="mock-chrome">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="mock-body">
+            <div class="mock-line" style="width: 55%"></div>
+            <div class="mock-line" style="width: 80%"></div>
+            <div class="mock-grid">
+              <div class="mock-tile" *ngFor="let t of [0,1,2,3]"></div>
             </div>
           </div>
+        </ng-container>
+      </div>
+    </ng-template>
+
+    <!-- Reusable markup: text content block -->
+    <ng-template #contentBlock let-proj>
+      <span class="spotlight-badge">{{ proj.badge }}</span>
+      <h3 class="spotlight-title">{{ proj.title }}</h3>
+      <p class="spotlight-subtitle">{{ proj.subtitle }}</p>
+      <p class="spotlight-desc">{{ proj.description }}</p>
+
+      <ul class="spotlight-features">
+        <li *ngFor="let feat of proj.features">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          {{ feat }}
+        </li>
+      </ul>
+
+      <div class="tech-stack">
+        <span *ngFor="let tech of proj.techStack" class="tech-tag">{{ tech }}</span>
+      </div>
+
+      <div class="spotlight-links">
+        <a [href]="proj.github" target="_blank" rel="noopener noreferrer" class="btn-pill-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.24 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.07.78 2.15 0 1.55-.01 2.8-.01 3.18 0 .3.2.66.79.55A10.52 10.52 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z" />
+          </svg>
+          Code
+        </a>
+        <a *ngIf="proj.demo" [href]="proj.demo" target="_blank" rel="noopener noreferrer" class="btn-pill-solid">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+          Live Demo
+        </a>
+      </div>
+    </ng-template>
+
+    <!-- Spotlight card -->
+    <div class="spotlight anim-el" *ngIf="activeProject as project">
+
+      <!-- Visual: two overlapping screen mockups, sliding carousel-style -->
+      <div class="spotlight-visual">
+
+        <!-- Outgoing mockups — only exist while a transition is in flight -->
+        <ng-container *ngIf="transitionState() === 'sliding' && outgoingProject() as prevProject">
+          <div class="mock-anim-layer outgoing" [class.dir-next]="direction() === 'next'"
+            [class.dir-prev]="direction() === 'prev'" style="animation-delay: 0ms">
+            <ng-container
+              *ngTemplateOutlet="mockBack; context: { $implicit: prevProject, imgState: imgFailedOutgoing, onErr: noopImgError }"></ng-container>
+          </div>
+          <div class="mock-anim-layer outgoing" [class.dir-next]="direction() === 'next'"
+            [class.dir-prev]="direction() === 'prev'" style="animation-delay: 40ms">
+            <ng-container
+              *ngTemplateOutlet="mockFront; context: { $implicit: prevProject, imgState: imgFailedOutgoing, onErr: noopImgError }"></ng-container>
+          </div>
+        </ng-container>
+
+        <!-- Current / incoming mockups -->
+        <div class="mock-anim-layer" [class.incoming]="transitionState() === 'sliding'"
+          [class.dir-next]="direction() === 'next'" [class.dir-prev]="direction() === 'prev'"
+          style="animation-delay: 90ms">
+          <ng-container
+            *ngTemplateOutlet="mockBack; context: { $implicit: project, imgState: imgFailed, onErr: onImgError }"></ng-container>
+        </div>
+        <div class="mock-anim-layer" [class.incoming]="transitionState() === 'sliding'"
+          [class.dir-next]="direction() === 'next'" [class.dir-prev]="direction() === 'prev'"
+          style="animation-delay: 130ms">
+          <ng-container
+            *ngTemplateOutlet="mockFront; context: { $implicit: project, imgState: imgFailed, onErr: onImgError }"></ng-container>
         </div>
 
-        <!-- Description -->
-        <p class="project-desc">{{ project.description }}</p>
+        <!-- Circular arrow-chip — doubles as "next project" -->
+        <button class="spotlight-arrow-chip" (click)="nextProject()" aria-label="Next project"
+          [class.is-busy]="transitionState() === 'sliding'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="7" y1="17" x2="17" y2="7" />
+            <polyline points="7 7 17 7 17 17" />
+          </svg>
+        </button>
+      </div>
 
-        <!-- Features -->
-        <ul class="project-features">
-          <li *ngFor="let feat of project.features">
-            <span class="feat-dot">▹</span>{{ feat }}
-          </li>
-        </ul>
-
-        <!-- Tech Stack Tags -->
-        <div class="tech-stack">
-          <span *ngFor="let tech of project.techStack" class="tech-tag">{{ tech }}</span>
+      <!-- Content: soft crossfade between outgoing and incoming text -->
+      <div class="spotlight-content-stack">
+        <div class="spotlight-content fade-outgoing"
+          *ngIf="transitionState() === 'sliding' && outgoingProject() as prevProject">
+          <ng-container *ngTemplateOutlet="contentBlock; context: { $implicit: prevProject }"></ng-container>
         </div>
-
-      </article>
+        <div class="spotlight-content" [class.fade-incoming]="transitionState() === 'sliding'">
+          <ng-container *ngTemplateOutlet="contentBlock; context: { $implicit: project }"></ng-container>
+        </div>
+      </div>
     </div>
 
     <!-- Empty state -->
-    <div *ngIf="filteredProjects().length === 0" class="empty-state">
+    <div *ngIf="!activeProject" class="empty-state">
       <p>No projects found for this filter.</p>
     </div>
 
-    <!-- GitHub CTA -->
-    <div class="projects-cta">
-      <a href="https://github.com/ahmed-alsoghayar" target="_blank" rel="noopener noreferrer" class="btn-outline">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839
-                   9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7
-                   -2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462
-                   -1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03
-                   1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088
-                   .636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984
-                   1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75
-                   1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.337
-                   1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1
-                   2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687
-                   -4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415
-                   -.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418
-                   22 12c0-5.523-4.477-10-10-10z" />
-        </svg>
-        {{ 'projects.viewAll' | translate }}
-      </a>
+    <!-- Pagination dots -->
+    <div class="spotlight-dots" *ngIf="filteredProjects().length > 1" [class.is-busy]="transitionState() === 'sliding'">
+      <button *ngFor="let p of filteredProjects(); let i = index" class="spotlight-dot"
+        [class.active]="activeProjectIndex() === i" (click)="goToProject(i)" [attr.aria-label]="p.title"></button>
     </div>
 
   </div>

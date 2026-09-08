@@ -1,87 +1,87 @@
 <section id="hero" class="hero">
-  <canvas #canvas class="hero-canvas"></canvas>
+  <div class="hero-glow" aria-hidden="true"></div>
 
-  <!-- Ambient blobs -->
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-
-  <div class="hero-content">
-
-    <!-- Tag line -->
-    <div class="hero-tag">
-      <span class="tag-dot"></span>
-      <span>{{ 'hero.available' | translate }}</span>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      {{ 'hero.available' | translate }}
     </div>
 
-    <!-- Name -->
-    <h1 class="hero-name">
-      {{ 'hero.firstName' | translate }}<br>
-      <span class="hero-name-accent">{{ 'hero.lastName' | translate }}</span>
+    <h1 class="hero-heading">
+      {{ 'hero.firstName' | translate }} {{ 'hero.lastName' | translate }}
+      <span class="hero-heading-role">
+        {{ typedText }}<span class="hero-cursor">|</span>
+      </span>
     </h1>
 
-    <!-- Typewriter -->
-    <div class="hero-title-wrap">
-      <span class="hero-title">{{ typedText }}</span>
-      <span class="cursor">|</span>
-    </div>
-
-    <!-- Description -->
     <p class="hero-desc">{{ 'hero.description' | translate }}</p>
 
-    <!-- CTAs -->
-    <div class="hero-ctas">
-      <button class="btn-primary" (click)="scrollTo('#projects')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="7" height="7" />
-          <rect x="14" y="3" width="7" height="7" />
-          <rect x="14" y="14" width="7" height="7" />
-          <rect x="3" y="14" width="7" height="7" />
-        </svg>
-        {{ 'hero.viewProjects' | translate }}
-      </button>
+    <div class="hero-portrait-wrap">
+      <div class="hero-blob" aria-hidden="true"></div>
 
-      <a href="./CV/AhmedMohamedAlsoghayar-CV.pdf" download class="btn-outline">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
-        {{ 'hero.downloadCv' | translate }}
-      </a>
+      <svg class="hero-doodle hero-doodle-1" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+        <path d="M4 30c6-14 20-22 32-16s16 20 6 26-24-2-20-14" stroke="var(--color-orange-400)" stroke-width="2.5"
+          stroke-linecap="round" />
+      </svg>
+      <svg class="hero-doodle hero-doodle-2" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M4 20 L18 6 M18 6 L14 6 M18 6 L18 10" stroke="var(--color-gray-700)" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="32" cy="30" r="3" fill="var(--color-orange-400)" />
+      </svg>
 
-      <button class="btn-outline" (click)="scrollTo('#contact')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-          <polyline points="22,6 12,13 2,6" />
-        </svg>
-        {{ 'hero.contactMe' | translate }}
-      </button>
+      <div class="hero-photo-frame">
+        <img *ngIf="!photoFailed" [src]="photoUrl" (load)="onPhotoLoad()" (error)="onPhotoError()"
+          alt="Ahmed Mohamed Alsoghayar" class="hero-photo" [class.hero-photo-visible]="photoLoaded" />
+        <div class="hero-photo-placeholder" *ngIf="photoFailed || !photoLoaded">
+          <span>AM</span>
+        </div>
+      </div>
+
+      <div class="hero-chip hero-chip-left">
+        <span class="hero-chip-icon">
+          <app-icon [name]="highlight.icon" [size]="20"></app-icon>
+        </span>
+        <div>
+          <p class="hero-chip-title">{{ highlight.label }}</p>
+          <p class="hero-chip-desc">{{ highlight.desc }}</p>
+        </div>
+      </div>
+
+      <div class="hero-chip hero-chip-right">
+        <span class="hero-stat-value">{{ lang.t()['hero'].stats.experience.value }}</span>
+        <span class="hero-stat-label">{{ lang.t()['hero'].stats.experience.label }}</span>
+      </div>
+
+      <div class="hero-cta-pill">
+        <button class="hero-cta-solid" (click)="scrollTo('#projects')">
+          {{ 'hero.viewProjects' | translate }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+        <button class="hero-cta-ghost" (click)="scrollTo('#contact')">
+          {{ 'hero.contactMe' | translate }}
+        </button>
+      </div>
     </div>
 
-    <!-- Quick stats -->
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-value">{{ lang.t()['hero'].stats.experience.value }}</span>
-        <span class="stat-label">{{ lang.t()['hero'].stats.experience.label }}</span>
+    <div class="hero-secondary-stats">
+      <div class="hero-sec-stat">
+        <strong>{{ lang.t()['hero'].stats.projects.value }}</strong>
+        {{ lang.t()['hero'].stats.projects.label }}
       </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span class="stat-value">{{ lang.t()['hero'].stats.projects.value }}</span>
-        <span class="stat-label">{{ lang.t()['hero'].stats.projects.label }}</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span class="stat-value">{{ lang.t()['hero'].stats.stacks.value }}</span>
-        <span class="stat-label">{{ lang.t()['hero'].stats.stacks.label }}</span>
+      <span class="hero-sec-divider"></span>
+      <div class="hero-sec-stat">
+        <strong>{{ lang.t()['hero'].stats.stacks.value }}</strong>
+        {{ lang.t()['hero'].stats.stacks.label }}
       </div>
     </div>
-
   </div>
 
-  <!-- Scroll indicator -->
-  <div class="scroll-indicator" (click)="scrollTo('#about')">
+  <div class="hero-scroll" (click)="scrollTo('#about')">
     <span>{{ 'hero.scroll' | translate }}</span>
-    <div class="scroll-arrow">
+    <div class="hero-scroll-arrow">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="12" y1="5" x2="12" y2="19" />
         <polyline points="19 12 12 19 5 12" />

@@ -1,227 +1,207 @@
-.edu-section {
-  padding: 7rem 1.5rem;
-  background: #0a0a0f;
-  position: relative;
+/* ============================================================
+   Education — reuses the same Figma "My Work Experience" timeline
+   pattern as the Experience section (both are chronological
+   content, so the same Figma-derived component fits both).
+   ============================================================ */
+.education-section {
+  padding: 6rem 0;
 }
 
-.edu-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 255, 178, 0.15),
-    transparent
-  );
-}
-
-/* Header */
 .edu-header {
-  margin-bottom: 3.5rem;
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
 }
 
 .edu-subtitle {
-  font-family: "DM Sans", sans-serif;
-  font-size: 1rem;
-  color: #6b7280;
-  margin-top: 0.75rem;
-  max-width: 500px;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--color-gray-500);
+  margin-top: 1.1rem;
 }
 
-/* Grid */
-.edu-grid {
+/* ── Timeline (shared shape with Experience) ─────────────── */
+.timeline {
+  position: relative;
+  margin-top: 4.5rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
+  grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+  column-gap: clamp(1.5rem, 4vw, 4rem);
+  row-gap: 3.5rem;
+  align-items: start;
 }
 
-/* Card */
-.edu-card {
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+/* Positioned independently of the grid (not a grid item), so it
+   can't collide with the auto-placed node column in each row —
+   it was previously grid-column:2/grid-row:1/-1, which fought
+   the node's own auto-placement in every row after the first. */
+.tl-line {
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 50%;
+  width: 0;
+  border-inline-start: 2px dashed var(--color-gray-300);
 }
 
-.edu-accent-line {
-  height: 3px;
-  width: 100%;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-
-.edu-card:hover .edu-accent-line {
-  opacity: 1;
-}
-
-.edu-card-body {
-  padding: 2rem;
-  flex: 1;
-}
-
-/* Top row */
-.edu-top-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
-
-.edu-icon-wrap {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.edu-icon {
-  font-size: 1.4rem;
-}
-
-.edu-period {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.72rem;
-  color: #6b7280;
-}
-
-/* Degree */
-.edu-degree {
-  font-family: "Syne", sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #f9fafb;
-  line-height: 1.3;
-  margin-bottom: 0.4rem;
-}
-
-.edu-institution {
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.88rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-/* Description */
-.edu-desc {
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.88rem;
-  color: #9ca3af;
-  line-height: 1.7;
-  margin-bottom: 1.25rem;
-}
-
-/* Highlights */
-.highlights-label {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.68rem;
-  color: #4b5563;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.tl-icon {
+  color: var(--color-orange-400);
   margin-bottom: 0.6rem;
 }
 
-.highlights-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+.tl-company-name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  color: var(--color-gray-800);
 }
 
-.highlights-list li {
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.84rem;
-  color: #9ca3af;
+.tl-period {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-gray-400);
+  margin-top: 0.35rem;
+}
+
+.tl-track {
+  position: relative;
+  z-index: 1;
   display: flex;
-  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.35rem;
+}
+
+.tl-node {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--color-orange-400);
+  background: var(--color-gray-25);
+}
+
+.tl-node::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--color-orange-400);
+}
+
+.tl-node.node-alt {
+  border-color: var(--color-gray-800);
+}
+.tl-node.node-alt::after {
+  background: var(--color-gray-800);
+}
+
+.tl-role-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  color: var(--color-gray-800);
+}
+
+.tl-role-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-gray-500);
+  margin-top: 0.5rem;
+  max-width: 480px;
+}
+
+.topics-block {
+  margin-top: 1.1rem;
+}
+
+.topics-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-gray-400);
+  margin-bottom: 0.6rem;
+}
+
+.topics-tags {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  line-height: 1.5;
 }
 
-.highlight-dot {
-  flex-shrink: 0;
-  font-size: 0.7rem;
-  margin-top: 3px;
+.topic-tag {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-gray-600);
+  background: var(--color-gray-100);
+  border-radius: 8px;
+  padding: 0.3rem 0.65rem;
 }
 
-/* Certs Banner */
+/* ── Continuous learning / certs banner ───────────────────── */
 .certs-banner {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 255, 178, 0.05),
-    rgba(0, 200, 255, 0.03)
-  );
-  border: 1px solid rgba(0, 255, 178, 0.1);
-  border-radius: 16px;
-  padding: 2rem;
-}
-
-.certs-inner {
+  margin-top: 5rem;
+  background: var(--color-orange-25);
+  border: 1px solid var(--color-orange-100);
+  border-radius: var(--radius-panel);
+  padding: 2.5rem clamp(1.5rem, 5vw, 3.5rem);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  flex-wrap: wrap;
 }
 
-.certs-title {
-  font-family: "Syne", sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #f9fafb;
-  margin-bottom: 0.35rem;
-}
-
-.certs-desc {
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.85rem;
-  color: #6b7280;
-  line-height: 1.6;
+.certs-text {
   max-width: 420px;
 }
 
-.certs-badges {
+.certs-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--color-gray-800);
+}
+
+.certs-desc {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-gray-500);
+  margin-top: 0.5rem;
+}
+
+.certs-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.75rem;
 }
 
 .cert-badge {
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #d1d5db;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.45rem 0.9rem;
-  border-radius: 8px;
-  transition: all 0.25s ease;
-  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-orange-500);
+  background: #fff;
+  border: 1px solid var(--color-orange-300);
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
 }
 
-.cert-badge:hover {
-  border-color: rgba(0, 255, 178, 0.25);
-  color: #00ffb2;
-  background: rgba(0, 255, 178, 0.05);
-}
-
-/* Animations */
+/* ── Scroll-reveal ────────────────────────────────────────── */
 .anim-el {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(24px);
   transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .anim-el.visible {
@@ -229,13 +209,27 @@
   transform: translateY(0);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .edu-grid {
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 760px) {
+  .timeline {
     grid-template-columns: 1fr;
+    row-gap: 1.1rem;
   }
-  .certs-inner {
+
+  .tl-line {
+    display: none;
+  }
+
+  .tl-track {
+    justify-content: flex-start;
+    padding-inline-start: 0.1rem;
+  }
+
+  .certs-banner {
     flex-direction: column;
     align-items: flex-start;
+    border-radius: 32px;
   }
 }

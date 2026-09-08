@@ -1,50 +1,64 @@
 <section id="skills" class="skills-section">
-  <div class="section-container">
+
+  <!-- Figma "skills ticker" marquee, repurposed with real tech stack names -->
+  <div class="skills-ticker-wrap" aria-hidden="true">
+    <div class="skills-ticker">
+      <div class="skills-ticker-track">
+        <ng-container *ngFor="let i of [0, 1]">
+          <span class="ticker-item" *ngFor="let badge of techBadges">
+            {{ badge }}
+            <span class="ticker-star">✦</span>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-page">
 
     <!-- Header -->
     <div class="skills-header anim-el">
-      <p class="section-tag">{{ 'skills.tag' | translate }}</p>
-      <h2 class="section-title">
+      <span class="section-eyebrow">{{ 'skills.tag' | translate }}</span>
+      <h2 class="section-heading">
         {{ 'skills.title' | translate }}
-        <span class="accent-text">{{ 'skills.titleAccent' | translate }}</span>
+        <span class="section-heading-accent">{{ 'skills.titleAccent' | translate }}</span>
       </h2>
       <p class="skills-subtitle">{{ 'skills.subtitle' | translate }}</p>
     </div>
 
-    <!-- Categories Grid -->
-    <div class="categories-grid">
-      <div *ngFor="let cat of categories; let i = index" class="skill-card card-dark anim-el"
-        [style.--card-delay]="(i * 0.12) + 's'">
-        <!-- Card Header -->
-        <div class="skill-card-header">
-          <span class="cat-icon">{{ cat.icon }}</span>
-          <h3 class="cat-title" [style.color]="cat.color">{{ cat.title }}</h3>
+    <!-- Category cards -->
+    <div class="cards-track" #cardsTrack (scroll)="onTrackScroll()">
+      <div *ngFor="let cat of categories; let i = index" class="skill-card anim-el"
+        [style.--card-delay]="(i * 0.12) + 's'" [style.--cat-color]="cat.color">
+        <!-- decorative texture overlay, echoes the 20%-opacity
+             background image used behind the Figma Services cards -->
+        <div class="skill-card-texture" aria-hidden="true"></div>
+
+        <!-- corner icon chip, echoes the Figma circular arrow-chip -->
+        <div class="skill-card-chip">
+          <app-icon [name]="cat.icon" [size]="20"></app-icon>
         </div>
 
-        <!-- Skill Bars -->
+        <h3 class="cat-title">{{ cat.title }}</h3>
+
         <div class="skill-bars">
           <div *ngFor="let skill of cat.skills" class="skill-bar-wrap">
             <div class="skill-bar-meta">
               <span class="skill-name">{{ skill.name }}</span>
-              <span class="skill-level" [style.color]="cat.color">{{ skill.level }}%</span>
+              <span class="skill-level">{{ skill.level }}%</span>
             </div>
             <div class="bar-track" [attr.data-level]="skill.level">
-              <div class="bar-fill" [style.background]="'linear-gradient(90deg,' + cat.color + '80,' + cat.color + ')'">
-              </div>
+              <div class="bar-fill"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Tech Badges -->
-    <div class="badges-row anim-el">
-      <span *ngFor="let badge of [
-          'C#','.NET 8','Angular','TypeScript','Azure','Docker',
-          'SQL Server','MongoDB','Redis','RxJS','NgRx','Tailwind',
-          'CQRS','MediatR','EF Core','SignalR','REST',
-          'Clean Arch','SOLID','DDD'
-        ]" class="tech-badge">{{ badge }}</span>
+    <!-- Pagination dots — Figma detail, functional here on mobile -->
+    <div class="cards-dots">
+      <button *ngFor="let cat of categories; let i = index" class="cards-dot" [class.active]="activeIndex === i"
+        (click)="scrollToIndex(i)" [attr.aria-label]="cat.title"></button>
     </div>
 
   </div>

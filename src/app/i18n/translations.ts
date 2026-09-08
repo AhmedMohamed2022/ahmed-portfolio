@@ -7,6 +7,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
   en: {
     // ── Navbar ─────────────────────────────────
     nav: {
+      home: 'Home',
       about: 'About',
       skills: 'Skills',
       projects: 'Projects',
@@ -52,22 +53,22 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
       githubProfile: 'GitHub Profile',
       highlights: [
         {
-          icon: '⚡',
+          icon: 'zap',
           label: '.NET Core Expert',
           desc: 'Building high-performance APIs and microservices',
         },
         {
-          icon: '🔷',
+          icon: 'code',
           label: 'Angular Architect',
           desc: 'Scalable SPAs with reactive state and lazy loading',
         },
         {
-          icon: '☁️',
+          icon: 'cloud',
           label: 'Cloud Native',
           desc: 'Azure deployments with CI/CD pipelines',
         },
         {
-          icon: '🏗️',
+          icon: 'layers',
           label: 'Clean Architecture',
           desc: 'SOLID principles & domain-driven design patterns',
         },
@@ -106,6 +107,19 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
             'Automated email campaigns',
           ],
           badge: 'Featured',
+        },
+        {
+          title: 'A3lanly',
+          subtitle: 'Advertisement Management Platform',
+          description:
+            'An advertisement management platform inspired by Google AdSense, letting publishers register websites, generate embed codes, and track ad performance in real time. Built end-to-end with ASP.NET MVC and deployed with ongoing fixes based on client feedback.',
+          features: [
+            'Advertisement publishing workflow',
+            'Website registration & embed code generation',
+            'Click & impression tracking analytics',
+            'ASP.NET Identity authentication & roles',
+          ],
+          badge: 'Ad-Tech',
         },
         {
           title: 'PointPay Rewards SaaS',
@@ -164,10 +178,14 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
         },
       ],
       metrics: [
-        { value: '60%', label: 'Deployment Time Reduced', icon: '⚡' },
-        { value: '40%', label: 'API Response Improvement', icon: '🚀' },
-        { value: '10+', label: 'Projects Delivered', icon: '✅' },
-        { value: '3+', label: 'Years of Experience', icon: '📅' },
+        { value: '60%', label: 'Deployment Time Reduced', icon: 'zap' },
+        {
+          value: '40%',
+          label: 'API Response Improvement',
+          icon: 'trending-up',
+        },
+        { value: '10+', label: 'Projects Delivered', icon: 'check-circle' },
+        { value: '3+', label: 'Years of Experience', icon: 'calendar' },
       ],
       current: 'Current',
     },
@@ -194,7 +212,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
             'SQL Server — advanced queries, indexing, optimization',
             'Azure Cloud fundamentals and CI/CD with Azure DevOps',
           ],
-          icon: '🎓',
+          icon: 'award',
         },
         {
           degree: "Bachelor's Degree — Computer Science",
@@ -209,17 +227,17 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
             'Networking & Operating Systems fundamentals',
             'Graduation Project — Full Stack Web Application',
           ],
-          icon: '📚',
+          icon: 'book-open',
         },
       ],
       continuousTitle: 'Continuous Learning',
       continuousDesc:
         'Regularly completing online courses and certifications in Azure, Docker, Clean Architecture, and advanced Angular patterns.',
       certs: [
-        '☁️ Azure Fundamentals',
-        '🐳 Docker & Containers',
-        '🏗️ Clean Architecture',
-        '🔷 Angular Advanced',
+        { icon: 'cloud', label: 'Azure Fundamentals' },
+        { icon: 'box', label: 'Docker & Containers' },
+        { icon: 'layers', label: 'Clean Architecture' },
+        { icon: 'code', label: 'Angular Advanced' },
       ],
     },
 
@@ -237,22 +255,28 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
       hireMe: 'Hire me',
       form: {
         name: 'Name',
-        namePh: 'Mohamed Omar',
+        namePh: 'Ahmed Mohamed',
         email: 'Email',
-        emailPh: 'mohamedomar@example.com',
+        emailPh: 'ahmedmohamed@gmail.com',
         subject: 'Subject',
         subjectPh: 'Project inquiry / Job opportunity',
         message: 'Message',
         messagePh: 'Tell me about your project or opportunity...',
         send: 'Send Message',
         sending: 'Sending…',
-        successTitle: 'Message sent!',
-        successDesc: "Thanks for reaching out. I'll get back to you shortly.",
+        successTitle: 'Almost there!',
+        successDesc:
+          'Your email app should now be open with everything pre-filled — just hit send.',
       },
     },
 
     // ── Footer ─────────────────────────────────
     footer: {
+      heading: "Let's",
+      headingAccent: 'connect',
+      hireMe: 'Hire Me',
+      quickContactTitle: 'Say hello',
+      quickContactPh: 'Your email address',
       tagline:
         'Full Stack .NET & Angular Developer\nBuilding systems that scale.',
       navTitle: 'Navigation',
@@ -270,6 +294,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
   ar: {
     // ── Navbar ─────────────────────────────────
     nav: {
+      home: 'الرئيسية',
       about: 'عني',
       skills: 'المهارات',
       projects: 'المشاريع',
@@ -315,22 +340,22 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
       githubProfile: 'صفحة GitHub',
       highlights: [
         {
-          icon: '⚡',
+          icon: 'zap',
           label: 'خبير .NET Core',
           desc: 'بناء APIs عالية الأداء والخدمات المصغّرة',
         },
         {
-          icon: '🔷',
+          icon: 'code',
           label: 'مهندس Angular',
           desc: 'تطبيقات SPA قابلة للتوسع مع إدارة الحالة التفاعلية',
         },
         {
-          icon: '☁️',
+          icon: 'cloud',
           label: 'سحابي أصيل',
           desc: 'نشر على Azure مع خطوط CI/CD',
         },
         {
-          icon: '🏗️',
+          icon: 'layers',
           label: 'هندسة نظيفة',
           desc: 'مبادئ SOLID والتصميم المحرّك بالمجال',
         },
@@ -367,6 +392,19 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
             'حملات بريد إلكتروني آلية',
           ],
           badge: 'مميز',
+        },
+        {
+          title: 'A3lanly',
+          subtitle: 'منصة إدارة الإعلانات',
+          description:
+            'منصة لإدارة الإعلانات مستوحاة من Google AdSense، تتيح للناشرين تسجيل مواقعهم، وتوليد أكواد التضمين، ومتابعة أداء الإعلانات لحظيًا. بُنيت بالكامل باستخدام ASP.NET MVC ونُشرت مع تحديثات مستمرة بناءً على ملاحظات العميل.',
+          features: [
+            'سير عمل نشر الإعلانات',
+            'تسجيل المواقع وتوليد كود التضمين',
+            'تحليلات تتبع النقرات والمشاهدات',
+            'مصادقة وصلاحيات عبر ASP.NET Identity',
+          ],
+          badge: 'إعلانات',
         },
         {
           title: 'PointPay Rewards SaaS',
@@ -425,10 +463,10 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
         },
       ],
       metrics: [
-        { value: '60%', label: 'تقليل وقت النشر', icon: '⚡' },
-        { value: '40%', label: 'تحسين أداء الـ API', icon: '🚀' },
-        { value: '+10', label: 'مشروع منجز', icon: '✅' },
-        { value: '+3', label: 'سنوات خبرة', icon: '📅' },
+        { value: '60%', label: 'تقليل وقت النشر', icon: 'zap' },
+        { value: '40%', label: 'تحسين أداء الـ API', icon: 'trending-up' },
+        { value: '+10', label: 'مشروع منجز', icon: 'check-circle' },
+        { value: '+3', label: 'سنوات خبرة', icon: 'calendar' },
       ],
       current: 'حالي',
     },
@@ -454,7 +492,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
             'SQL Server — استعلامات متقدمة وفهرسة وتحسين',
             'أساسيات Azure السحابية وCI/CD مع Azure DevOps',
           ],
-          icon: '🎓',
+          icon: 'award',
         },
         {
           degree: 'بكالوريوس — علوم الحاسب',
@@ -469,17 +507,17 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
             'أساسيات الشبكات وأنظمة التشغيل',
             'مشروع التخرج — تطبيق ويب متكامل',
           ],
-          icon: '📚',
+          icon: 'book-open',
         },
       ],
       continuousTitle: 'التعلم المستمر',
       continuousDesc:
         'أكمل دورات وشهادات بانتظام في Azure وDocker وClean Architecture وأنماط Angular المتقدمة.',
       certs: [
-        '☁️ أساسيات Azure',
-        '🐳 Docker والحاويات',
-        '🏗️ الهندسة النظيفة',
-        '🔷 Angular المتقدم',
+        { icon: 'cloud', label: 'أساسيات Azure' },
+        { icon: 'box', label: 'Docker والحاويات' },
+        { icon: 'layers', label: 'الهندسة النظيفة' },
+        { icon: 'code', label: 'Angular المتقدم' },
       ],
     },
 
@@ -496,22 +534,28 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
       hireMe: 'وظّفني',
       form: {
         name: 'الاسم',
-        namePh: 'محمد عمر',
+        namePh: 'احمد محمد',
         email: 'البريد الإلكتروني',
-        emailPh: 'mohammedomar@example.com',
+        emailPh: 'ahmedmohamed@gmail.com',
         subject: 'الموضوع',
         subjectPh: 'استفسار عن مشروع / فرصة عمل',
         message: 'الرسالة',
         messagePh: 'أخبرني عن مشروعك أو فرصتك...',
         send: 'إرسال الرسالة',
         sending: 'جاري الإرسال…',
-        successTitle: 'تم الإرسال!',
-        successDesc: 'شكرًا على تواصلك. سأرد عليك قريبًا.',
+        successTitle: 'كدنا ننتهي!',
+        successDesc:
+          'من المفترض أن يفتح تطبيق البريد الآن مع تعبئة كل شيء — فقط اضغط إرسال.',
       },
     },
 
     // ── Footer ─────────────────────────────────
     footer: {
+      heading: 'لنبقَ',
+      headingAccent: 'متواصلين',
+      hireMe: 'وظّفني',
+      quickContactTitle: 'قل مرحباً',
+      quickContactPh: 'بريدك الإلكتروني',
       tagline: 'مطور Full Stack .NET & Angular\nبناء أنظمة تتوسع.',
       navTitle: 'التنقل',
       contactTitle: 'التواصل',

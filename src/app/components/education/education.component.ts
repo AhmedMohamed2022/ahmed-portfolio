@@ -1,40 +1,33 @@
-import { Component, OnInit, inject, effect, computed } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  inject,
+  effect,
+  computed,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../../services/language.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
-
-export interface EducationStatic {
-  icon: string;
-  color: string;
-  period: string;
-}
+import { IconComponent } from '../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-education',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, IconComponent],
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.css'],
 })
-export class EducationComponent implements OnInit {
+export class EducationComponent implements AfterViewInit {
   lang = inject(LanguageService);
 
-  private staticEducations: EducationStatic[] = [
-    { icon: '🎓', color: '#00FFB2', period: '2025 – 2026' },
-    { icon: '📚', color: '#A78BFA', period: '2020 – 2024' },
-  ];
-
-  // computed — reactive, re-evaluates when lang signal changes
+  // computed — reactive, re-evaluates when the language signal changes
   educations = computed(() => {
-    const items = this.lang.t()['education'].items;
-    return this.staticEducations.map((s, i) => ({
-      ...s,
-      degree: items[i].degree,
-      institution: items[i].institution,
-      description: items[i].description,
-      highlights: items[i].highlights,
-    }));
+    return this.lang.t()['education'].items as any[];
   });
+
+  get certs() {
+    return this.lang.t()['education'].certs as any[];
+  }
 
   private observer!: IntersectionObserver;
 
@@ -45,13 +38,13 @@ export class EducationComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.observer = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
-          if (e.isIntersecting && !e.target.classList.contains('visible')) {
+          if (e.isIntersecting) {
             e.target.classList.add('visible');
-            this.observer.unobserve(e.target); // fire once, stop the loop
+            this.observer.unobserve(e.target);
           }
         }),
       { threshold: 0.1 },
@@ -60,12 +53,8 @@ export class EducationComponent implements OnInit {
   }
 
   private observeElements(): void {
-    document
-      .querySelectorAll('.edu-header, .edu-card, .certs-banner')
-      .forEach((el) => {
-        if (!el.classList.contains('visible')) {
-          this.observer.observe(el);
-        }
-      });
+    document.querySelectorAll('#education .anim-el').forEach((el) => {
+      if (!el.classList.contains('visible')) this.observer.observe(el);
+    });
   }
 }

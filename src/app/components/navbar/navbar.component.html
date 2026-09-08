@@ -1,62 +1,65 @@
-<nav [class.scrolled]="isScrolled" class="navbar">
-  <div class="nav-inner">
-
+<header class="nav-wrap" [class.scrolled]="isScrolled">
+  <nav class="nav-pill">
     <!-- Logo -->
-    <a href="#" class="logo" (click)="scrollTo('#hero'); $event.preventDefault()">
-      <span class="logo-bracket">&lt;</span>
-      <span class="logo-name">Ahmed</span>
-      <span class="logo-bracket">/&gt;</span>
+    <a href="#hero" class="nav-logo" (click)="scrollTo('#hero'); $event.preventDefault()">
+      <svg class="nav-logo-mark" width="32" height="32" viewBox="0 0 40 40">
+        <defs>
+          <linearGradient id="navLogoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#FEB273" />
+            <stop offset="1" stop-color="#FB6514" />
+          </linearGradient>
+        </defs>
+        <rect width="40" height="40" rx="11" fill="url(#navLogoGrad)" />
+        <polyline points="16 13 10 20 16 27" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <line x1="23" y1="12" x2="17" y2="28" stroke="#fff" stroke-width="2.6" stroke-linecap="round" />
+        <polyline points="24 13 30 20 24 27" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <span class="nav-logo-word">Ahmed</span>
     </a>
 
-    <!-- Desktop Links -->
+    <!-- Desktop links -->
     <ul class="nav-links">
       <li *ngFor="let link of navLinks">
-        <a [href]="link.href" (click)="scrollTo(link.href); $event.preventDefault()">
+        <a [href]="link.href" class="nav-link" [class.active]="activeSection === link.href.slice(1)"
+          (click)="scrollTo(link.href); $event.preventDefault()">
           {{ link.key | translate }}
         </a>
       </li>
     </ul>
 
-    <!-- Right Controls -->
+    <!-- Right controls -->
     <div class="nav-controls">
-
-      <!-- Language Toggle -->
-      <button class="lang-btn" (click)="toggleLang()"
+      <button class="lang-toggle" (click)="toggleLang()"
         [title]="lang.isArabic() ? 'Switch to English' : 'التبديل إلى العربية'">
-        <span class="lang-icon">{{ lang.isArabic() ? 'EN' : 'AR' }}</span>
+        {{ lang.isArabic() ? 'EN' : 'AR' }}
       </button>
 
-      <!-- CV Button -->
-      <a href="./CV/AhmedMohamedAlsoghayar-CV.pdf" download class="btn-cv">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
+      <a href="./CV/AhmedMohamedAlsoghayar-CV.pdf" download class="nav-cv-btn">
         {{ 'nav.downloadCv' | translate }}
       </a>
 
-      <!-- Hamburger -->
-      <button class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen">
+      <button class="nav-hamburger" (click)="toggleMenu()" [class.open]="menuOpen" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
-
     </div>
-  </div>
+  </nav>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" [class.open]="menuOpen">
+  <!-- Mobile menu -->
+  <div class="nav-mobile-menu" [class.open]="menuOpen">
     <ul>
       <li *ngFor="let link of navLinks">
-        <a [href]="link.href" (click)="scrollTo(link.href); $event.preventDefault()">
+        <a [href]="link.href" [class.active]="activeSection === link.href.slice(1)"
+          (click)="scrollTo(link.href); $event.preventDefault()">
           {{ link.key | translate }}
         </a>
       </li>
       <li>
-        <a href="./CV/AhmedMohamedAlsoghayar-CV.pdf" download class="mobile-cv">
-          ↓ {{ 'nav.downloadCv' | translate }}
+        <a href="./CV/AhmedMohamedAlsoghayar-CV.pdf" download class="nav-mobile-cv">
+          {{ 'nav.downloadCv' | translate }}
         </a>
       </li>
     </ul>
   </div>
-</nav>
+</header>
