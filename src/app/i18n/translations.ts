@@ -95,6 +95,20 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
       filters: ['All', '.NET', 'Angular', 'SaaS', 'Full Stack'],
       items: [
         {
+          title: 'ServiCore',
+          subtitle: 'Multi-Tenant Service Management Platform',
+          description:
+            'A multi-tenant customer support platform with organization-scoped data isolation and organization-specific roles for Owners, Managers, and Agents. Built with secure REST APIs, a full ticket lifecycle, and a role-aware Angular 19 frontend with real-time notifications.',
+          features: [
+            'Organization-scoped data isolation (multi-tenancy)',
+            'ASP.NET Core Identity, JWT & policy-based authorization',
+            'Ticket lifecycle with team & agent assignment',
+            'Real-time notifications with SignalR',
+            'Reporting dashboards for customers & staff',
+          ],
+          badge: 'Multi-Tenant SaaS',
+        },
+        {
           title: 'MasjidStory Platform',
           subtitle: 'Community & Content Management',
           description:
@@ -134,20 +148,6 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
             'Webhook event system',
           ],
           badge: 'SaaS',
-        },
-        {
-          title: 'Online Bookstore',
-          subtitle: 'E-Commerce Platform',
-          description:
-            'A full-featured online bookstore with product catalog, shopping cart, Stripe payment integration, order management, and an Angular-powered storefront. Implements CQRS pattern with MediatR.',
-          features: [
-            'CQRS pattern with MediatR',
-            'Stripe payment integration',
-            'Full-text search & filtering',
-            'Order tracking & history',
-            'Admin inventory management',
-          ],
-          badge: 'E-Commerce',
         },
       ],
     },
@@ -380,6 +380,20 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
       filters: ['الكل', '.NET', 'Angular', 'SaaS', 'Full Stack'],
       items: [
         {
+          title: 'ServiCore',
+          subtitle: 'منصة إدارة خدمات متعددة المستأجرين',
+          description:
+            'منصة دعم عملاء متعددة المستأجرين تعزل بيانات كل مؤسسة عن غيرها، وتوفر أدوارًا خاصة بكل مؤسسة للمالكين والمديرين والوكلاء. بُنيت بواجهات REST آمنة، ودورة حياة كاملة للتذاكر، وواجهة Angular 19 تتكيّف مع دور المستخدم مع إشعارات فورية.',
+          features: [
+            'عزل البيانات على مستوى المؤسسة (تعدد المستأجرين)',
+            'ASP.NET Core Identity وJWT وصلاحيات قائمة على السياسات',
+            'دورة حياة التذاكر مع إسناد للفرق والوكلاء',
+            'إشعارات فورية عبر SignalR',
+            'لوحات تقارير للعملاء وفريق العمل',
+          ],
+          badge: 'SaaS متعدد المستأجرين',
+        },
+        {
           title: 'منصة MasjidStory',
           subtitle: 'إدارة المجتمع والمحتوى',
           description:
@@ -419,20 +433,6 @@ export const TRANSLATIONS: Record<Lang, Record<string, any>> = {
             'نظام أحداث Webhook',
           ],
           badge: 'SaaS',
-        },
-        {
-          title: 'متجر الكتب الإلكتروني',
-          subtitle: 'منصة تجارة إلكترونية',
-          description:
-            'متجر كتب إلكتروني متكامل: كتالوج المنتجات، عربة التسوق، دمج Stripe للدفع، إدارة الطلبات، وواجهة Angular. يُطبَّق نمط CQRS مع MediatR.',
-          features: [
-            'نمط CQRS مع MediatR',
-            'دمج بوابة دفع Stripe',
-            'بحث نصي كامل وتصفية',
-            'تتبع الطلبات وسجلها',
-            'إدارة مخزون المشرف',
-          ],
-          badge: 'تجارة إلكترونية',
         },
       ],
     },

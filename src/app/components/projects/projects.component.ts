@@ -46,6 +46,28 @@ export class ProjectsComponent implements AfterViewInit {
     {
       id: 1,
       techStack: [
+        'ASP.NET Core 8',
+        'Angular 19',
+        'SQL Server',
+        'Entity Framework Core',
+        'JWT',
+        'SignalR',
+        'Tailwind CSS',
+      ],
+      github:
+        'https://github.com/AhmedMohamed2022/ServiCore-Multi-Tenant-Service-Management-Platform-Frontend',
+      demo: 'https://servicore-lovat.vercel.app/',
+      featured: true,
+      gradient: 'linear-gradient(135deg, #14B8A6 0%, #0F766E 100%)',
+      filterTags: ['All', '.NET', 'Angular', 'SaaS', 'Full Stack'],
+      screenshots: [
+        '/img/projects/servicore-1.png',
+        '/img/projects/servicore-2.png',
+      ],
+    },
+    {
+      id: 2,
+      techStack: [
         'ASP.NET Core',
         'Angular',
         'SQL Server',
@@ -65,7 +87,7 @@ export class ProjectsComponent implements AfterViewInit {
       ],
     },
     {
-      id: 2,
+      id: 3,
       techStack: [
         'ASP.NET MVC',
         'Razor Views',
@@ -85,7 +107,7 @@ export class ProjectsComponent implements AfterViewInit {
       ],
     },
     {
-      id: 3,
+      id: 4,
       techStack: [
         'ASP.NET Core',
         'Angular',
@@ -96,30 +118,11 @@ export class ProjectsComponent implements AfterViewInit {
       ],
       github: 'https://github.com/FinalProjectITIIntkate45/Backend',
       featured: true,
-      gradient: 'linear-gradient(135deg, #A78BFA 0%, #F472B6 100%)',
+      gradient: 'linear-gradient(135deg, #14B8A6 0%, #0F766E 100%)',
       filterTags: ['All', '.NET', 'Angular', 'SaaS', 'Full Stack'],
       screenshots: [
         '/img/projects/pointpay-1.png',
         '/img/projects/pointpay-2.png',
-      ],
-    },
-    {
-      id: 4,
-      techStack: [
-        'ASP.NET Core',
-        'Angular',
-        'SQL Server',
-        'MediatR',
-        'CQRS',
-        'Stripe API',
-      ],
-      github: 'https://github.com/AhmedMohamed2022/online-bookstore',
-      featured: false,
-      gradient: 'linear-gradient(135deg, #FB923C 0%, #F59E0B 100%)',
-      filterTags: ['All', '.NET', 'Angular', 'Full Stack'],
-      screenshots: [
-        '/img/projects/bookstore-1.png',
-        '/img/projects/bookstore-2.png',
       ],
     },
   ];
